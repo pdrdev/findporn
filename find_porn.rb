@@ -13,31 +13,14 @@ class FindPorn
     @login_args = {'mode' => 'login', @config.get('login_field_name') => @config.get('login'), @config.get('password_field_name') => @config.get('password'), 'login' => 'Login', 'redirect' => './index.php?'}
   end
 
-  def get_cookies(result)
-    all_cookies = result.get_fields('Set-cookie')
-    @cookie_manager.pack_cookies(all_cookies)
-  end
-
-  def login_and_save_cookies
+  def login
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
-    cookies = get_cookies(login_result)
-    puts cookies
-    File.open("cookies", "w") do |f|
-      f.write(cookies)
-    end
-  end
-
-  def read_cookies
-    res = ''
-    File.open("cookies", "r") do |f|
-      res = f.readline
-    end
-    res
+    @cookie_manager.pack_cookies(login_result.get_fields('Set-cookie'), true)
   end
 
   def do_search
     http = Net::HTTP.new(@search_host)
-    response = http.post(@search_path, "max=1&to=1&nm=search_string&start=50", {'Cookie' => @cookie_manager.packed_cookies})
+    response = http.post(@search_path, "max=1&to=1&nm=search_string&start=50", {'Cookie' => @cookie_manager.get_cookies})
     write_result(response)
   end
 
