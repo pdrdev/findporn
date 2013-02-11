@@ -1,6 +1,6 @@
 require "find_porn"
 
-DO_LOGIN = true
+DO_LOGIN = false
 find_porn = FindPorn.new
 
 if DO_LOGIN
