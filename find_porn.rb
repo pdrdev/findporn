@@ -1,6 +1,10 @@
+require 'rubygems'
 require 'net/http'
+require 'nokogiri'
+
 require 'settings'
 require 'cookie_manager'
+require 'href'
 
 class FindPorn
 
@@ -19,9 +23,13 @@ class FindPorn
   end
 
   def do_search
+  end
+
+  def find_hrefs(query)
     http = Net::HTTP.new(@search_host)
-    response = http.post(@search_path, "max=1&to=1&nm=search_string&start=50", {'Cookie' => @cookie_manager.get_cookies})
-    write_result(response)
+    response = http.post(@search_path, "max=1&to=1&nm=#{query}&start=50", {'Cookie' => @cookie_manager.get_cookies})
+    doc = Nokogiri::HTML(response.body)
+    doc.xpath("//a[@class='med tLink bold']").map{|s| Href.new(s)}
   end
 
   def write_result (result)
