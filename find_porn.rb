@@ -24,13 +24,18 @@ class FindPorn
 
   def do_search
     queries = get_queries
+    queries_to_hrefs = {}
+    queries.each do |query|
+      queries_to_hrefs[query] = find_hrefs(query)
+    end
+    print_results queries_to_hrefs
   end
 
   def find_hrefs(query)
     http = Net::HTTP.new(@search_host)
-    response = http.post(@search_path, "max=1&to=1&nm=#{query}&start=50", {'Cookie' => @cookie_manager.get_cookies})
+    response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
     doc = Nokogiri::HTML(response.body)
-    doc.xpath("//a[@class='med tLink bold']").map{|s| Href.new(s)}
+    doc.xpath("//a[@class='med tLink bold']").take(10).map{|s| Href.new(s)}
   end
 
   def get_queries
@@ -38,9 +43,19 @@ class FindPorn
     text.lines.select{|line| !line.strip!.empty?}
   end
 
-  def write_result (result)
-    File.open("result.html", 'w') do |f|
-      f.write(result.body)
+  def print_results(queries_to_hrefs)
+    File.open("result.html", "w") do |f|
+      f.write '<?xml version="1.0" encoding="UTF-8"?>'
+      f.write("<html>")
+      f.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
+      f.write("<body>")
+      queries_to_hrefs.each do |query, hrefs|
+        f.write("<h3>#{query}</h3>")
+        hrefs.each do |href|
+          f.write("<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>")
+        end
+      end
+      f.write("</body></html>")
     end
   end
 end
