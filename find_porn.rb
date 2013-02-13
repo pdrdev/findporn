@@ -24,11 +24,11 @@ class FindPorn
 
   def do_search
     queries = get_queries
-    queries_to_hrefs = {}
+    hrefs_for_queries = []
     queries.each do |query|
-      queries_to_hrefs[query] = find_hrefs(query)
+      hrefs_for_queries << {:query => query, :hrefs => find_hrefs(query)}
     end
-    print_results queries_to_hrefs
+    print_results hrefs_for_queries
   end
 
   def find_hrefs(query)
@@ -43,15 +43,15 @@ class FindPorn
     text.lines.select{|line| !line.strip!.empty?}
   end
 
-  def print_results(queries_to_hrefs)
+  def print_results(hrefs_for_queries)
     File.open("result.html", "w") do |f|
       f.write '<?xml version="1.0" encoding="UTF-8"?>'
       f.write("<html>")
       f.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
       f.write("<body>")
-      queries_to_hrefs.each do |query, hrefs|
-        f.write("<h3>#{query}</h3>")
-        hrefs.each do |href|
+      hrefs_for_queries.each do |hrefs_for_query|
+        f.write("<h3>#{hrefs_for_query[:query]}</h3>")
+        hrefs_for_query[:hrefs].each do |href|
           f.write("<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>")
         end
       end
