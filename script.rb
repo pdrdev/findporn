@@ -1,9 +1,16 @@
 require "find_porn"
+require "arg_processor"
 
-DO_LOGIN = false
+arg_processor = ArgProcessor.new(ARGV)
+if arg_processor.error?
+  puts arg_processor.error_message
+  exit(0)
+end
+
+do_login = arg_processor.do_login
 find_porn = FindPorn.new
 
-if DO_LOGIN
+if do_login
   find_porn.login
 end
 
