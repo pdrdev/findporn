@@ -31,6 +31,9 @@ class CookieManager
   end
 
   def read_cookies
+    if !File.exists?("cookies")
+      return ''
+    end
     res = ''
     File.open("cookies", "r") do |f|
       res = f.readline

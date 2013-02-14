@@ -15,11 +15,31 @@ class FindPorn
     @search_host = @config.get('host')
     @search_path = @config.get('search_path')
     @login_args = {'mode' => 'login', @config.get('login_field_name') => @config.get('login'), @config.get('password_field_name') => @config.get('password'), 'login' => 'Login', 'redirect' => './index.php?'}
+    @login_attempted = false
   end
 
   def login
+    if @login_attempted
+      puts "Login failed"
+      exit(1)
+    end
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
+    if !check_login(login_result)
+      login
+      return
+    end
     @cookie_manager.pack_cookies(login_result.get_fields('Set-cookie'), true)
+    @login_attempted = true
+  end
+
+  def check_login(response)
+    doc = Nokogiri::HTML(response.body)
+    send_password_links = doc.xpath("//a[@href='profile.php?mode=sendpassword']")
+    return contains_cookies(response) || (send_password_links.empty? && !response.body.empty?)
+  end
+
+  def contains_cookies(response)
+      response != nil && response.get_fields('Set-cookie') != nil && !response.get_fields('Set-cookie').empty?
   end
 
   def do_search
@@ -34,6 +54,10 @@ class FindPorn
   def find_hrefs(query)
     http = Net::HTTP.new(@search_host)
     response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
+    if !check_login(response)
+      login
+      return find_hrefs(query)
+    end
     doc = Nokogiri::HTML(response.body)
     doc.xpath("//a[@class='med tLink bold']").take(10).map{|s| Href.new(s)}
   end
