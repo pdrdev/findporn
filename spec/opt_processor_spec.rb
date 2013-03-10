@@ -9,31 +9,43 @@ describe OptProcessor do
     processor.error?.should == true
   end
 
-  it "should not log in by default" do
+  it "should use default do-login" do
     processor = OptProcessor.new([])
     processor.error?.should == false
-    processor.do_login == false
+    processor.do_login.should == OptProcessor::DEFAULT_TO_LOGIN
   end
 
   it "should log in if there's the arg'" do
     processor = OptProcessor.new(['--do-login'])
     processor.error?.should == false
-    processor.do_login == true
+    processor.do_login.should == true
   end
 
-  it "should not be verbose by default" do
+  it "should use default verbose" do
     processor = OptProcessor.new([])
     processor.error?.should == false
-    processor.verbose == false
+    processor.verbose.should == OptProcessor::DEFAULT_VERBOSE
   end
 
   it "should be verbose if specified" do
     processor = OptProcessor.new(['-v'])
     processor.error?.should == false
-    processor.verbose == true
+    processor.verbose.should == true
 
     processor = OptProcessor.new(['--verbose'])
     processor.error?.should == false
-    processor.verbose == true
+    processor.verbose.should == true
+  end
+
+  it "should use default max-hrefs" do
+    processor = OptProcessor.new([])
+    processor.error?.should == false
+    processor.max_hrefs.should == OptProcessor::DEFAULT_MAX_HREFS
+  end
+
+  it "should use specified max-hrefs" do
+    processor = OptProcessor.new(['--max-hrefs', '123'])
+    processor.error?.should == false
+    processor.max_hrefs.should == 123
   end
 end

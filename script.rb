@@ -23,7 +23,7 @@ end
 start_time = Time.new
 Util.log("Started at #{start_time.inspect}", true)
 
-find_porn = FindPorn.new
+find_porn = FindPorn.new opt_processor
 if opt_processor.do_login
   # forced login
   find_porn.login

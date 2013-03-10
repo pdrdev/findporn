@@ -4,6 +4,7 @@ require 'nokogiri'
 
 require 'settings'
 require 'cookie_manager'
+require 'opt_processor'
 require 'href'
 
 # main class
@@ -11,8 +12,9 @@ require 'href'
 # runs queries
 class FindPorn
 
-  def initialize
+  def initialize(opt_processor)
     @cookie_manager = CookieManager.new
+    @opt_processor = opt_processor
     @config = Settings.new
     @login_uri = URI(@config.get('protocol') + '://' + @config.get('host') + @config.get('login_path'))
     @search_host = @config.get('host')
@@ -62,7 +64,7 @@ class FindPorn
       return find_hrefs(query)
     end
     doc = Nokogiri::HTML(response.body)
-    doc.xpath("//a[@class='med tLink bold']").take(10).map{|s| Href.new(s)}
+    doc.xpath("//a[@class='med tLink bold']").take(@opt_processor.max_hrefs).map{|s| Href.new(s)}
   end
 
   # read queries from the text file
