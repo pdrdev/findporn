@@ -39,6 +39,7 @@ class OptProcessor
     @error_message
   end
 
+  # force login
   def do_login
     if @options.has_key?(:do_login)
       @options[:do_login]
@@ -55,6 +56,7 @@ class OptProcessor
     end
   end
 
+  # Maximum hrefs for one query
   def max_hrefs
     if @options.has_key? :max_hrefs
       @options[:max_hrefs]
