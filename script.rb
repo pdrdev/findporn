@@ -1,18 +1,26 @@
 require "find_porn"
 require "opt_processor"
 require "optparse"
+require "util.rb"
 
 opt_processor = OptProcessor.new(ARGV)
+Util.opt_processor = opt_processor
+
+def get_opt_processor
+  opt_processor
+end
+
 if opt_processor.error?
-  puts opt_processor.error_message
+  Util.log opt_processor.error_message
   exit(1)
 end
 
-do_login = opt_processor.do_login
-find_porn = FindPorn.new
+Util.log("Started", true)
 
-if do_login
+find_porn = FindPorn.new
+if opt_processor.do_login
   find_porn.login
 end
-
 find_porn.do_search
+
+Util.log("Stopped", true)

@@ -20,16 +20,16 @@ class FindPorn
 
   def login
     if @login_attempted
-      puts "Login failed. Check your login and password."
+      Util.log "Login failed. Check your login and password."
       exit(1)
     end
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
     if !check_login(login_result)
-      puts "Login attempt failed. Retrying..."
+      Util.log("Login attempt failed. Retrying...", true)
       login
       return
     else
-      puts "Login succeeded."
+      Util.log("Login succeeded.", true)
     end
     @cookie_manager.pack_cookies(login_result.get_fields('Set-cookie'), true)
     @login_attempted = true

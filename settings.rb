@@ -9,8 +9,8 @@ class Settings
   def get(name)
     res = @properties[name]
     if res.nil?
-      puts "Property #{name} doesn't exist in config.yml"
-      abort()
+      Util.log "Property #{name} doesn't exist in config.yml"
+      exit(1)
     else
       @properties[name]
     end
