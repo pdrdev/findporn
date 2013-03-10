@@ -15,7 +15,8 @@ if opt_processor.error?
   exit(1)
 end
 
-Util.log("Started", true)
+start_time = Time.new
+Util.log("Started at #{start_time.inspect}", true)
 
 find_porn = FindPorn.new
 if opt_processor.do_login
@@ -23,4 +24,7 @@ if opt_processor.do_login
 end
 find_porn.do_search
 
+stop_time = Time.new
 Util.log("Stopped", true)
+Util.log("Started at #{stop_time.inspect}", true)
+Util.log("Execution time: #{stop_time - start_time} seconds", true)
