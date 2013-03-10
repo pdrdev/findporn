@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require "find_porn"
 require "opt_processor"
 require "optparse"
