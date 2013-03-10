@@ -6,6 +6,9 @@ require 'settings'
 require 'cookie_manager'
 require 'href'
 
+# main class
+# logs in
+# runs queries
 class FindPorn
 
   def initialize
@@ -35,6 +38,7 @@ class FindPorn
     @login_attempted = true
   end
 
+  # assume login is successful if there's no "send password" element in response body
   def check_login(response)
     doc = Nokogiri::HTML(response.body)
     send_password_links = doc.xpath("//a[@href='profile.php?mode=sendpassword']")
@@ -61,6 +65,7 @@ class FindPorn
     doc.xpath("//a[@class='med tLink bold']").take(10).map{|s| Href.new(s)}
   end
 
+  # read queries from the text file
   def get_queries
     text = File.open('queries').read # TODO handle errors
     text.lines.select{|line| !line.strip!.empty?}

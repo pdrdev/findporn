@@ -1,3 +1,4 @@
+# processing command line arguments
 class OptProcessor
   def initialize(args)
     @error = false

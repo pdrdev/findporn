@@ -1,4 +1,5 @@
 module Util extend self
+  # initialized in main file
   attr_accessor :opt_processor
 
   def self.log(message, verbose=false)

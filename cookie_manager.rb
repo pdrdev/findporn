@@ -1,3 +1,4 @@
+# cookies are stored in 'cookies' text file
 class CookieManager
   attr_accessor :packed_cookies
 
@@ -10,6 +11,7 @@ class CookieManager
     read_cookies
   end
 
+  # save cookies and return them
   def pack_cookies(cookie_array, save=true)
     cookie_hash = cookie_array_to_hash(cookie_array)
 
