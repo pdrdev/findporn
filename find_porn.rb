@@ -66,6 +66,7 @@ class FindPorn
     text.lines.select{|line| !line.strip!.empty?}
   end
 
+  # TODO use templates or something
   def print_results(hrefs_for_queries)
     File.open("result.html", "w") do |f|
       f.write '<?xml version="1.0" encoding="UTF-8"?>'

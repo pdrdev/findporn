@@ -1,13 +1,14 @@
 require "find_porn"
-require "arg_processor"
+require "opt_processor"
+require "optparse"
 
-arg_processor = ArgProcessor.new(ARGV)
-if arg_processor.error?
-  puts arg_processor.error_message
-  exit(0)
+opt_processor = OptProcessor.new(ARGV)
+if opt_processor.error?
+  puts opt_processor.error_message
+  exit(1)
 end
 
-do_login = arg_processor.do_login
+do_login = opt_processor.do_login
 find_porn = FindPorn.new
 
 if do_login
