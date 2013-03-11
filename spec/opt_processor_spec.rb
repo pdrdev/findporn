@@ -1,6 +1,6 @@
 require "rspec"
 
-require "opt_processor"
+require "./opt_processor"
 
 describe OptProcessor do
 

@@ -1,5 +1,5 @@
 require "rspec"
-require "href"
+require "./href"
 
 describe Href do
 
