@@ -1,11 +1,10 @@
-require 'rubygems'
 require 'net/http'
 require 'nokogiri'
 
-require 'settings'
-require 'cookie_manager'
-require 'opt_processor'
-require 'href'
+require './opt_processor'
+require './settings'
+require './cookie_manager'
+require './href'
 
 # main class
 # logs in

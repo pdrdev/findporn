@@ -1,10 +1,8 @@
-#!/usr/bin/ruby
+require "./find_porn"
+require "./util.rb"
+require "./opt_processor"
 
-require "find_porn"
-require "opt_processor"
 require "optparse"
-require "util.rb"
-
 
 def get_opt_processor
   opt_processor
