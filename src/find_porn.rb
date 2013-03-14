@@ -69,7 +69,20 @@ class FindPorn
   # read queries from the text file
   def get_queries
     text = File.open(Util.root + 'queries').read # TODO handle errors
-    text.lines.select{|line| !line.strip!.empty?}
+    lines = text.lines
+
+    # removing comments
+    lines = lines.map do |line|
+      comment_index = line.index '#'
+      if !comment_index.nil?
+        line[0...comment_index]
+      else
+        line
+      end
+    end
+
+    # removing empty lines
+    lines = lines.select{|line| !line.nil? && !line.strip.empty?}
   end
 
   # TODO use templates or something
