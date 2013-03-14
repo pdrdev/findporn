@@ -9,7 +9,7 @@ class OptProcessor
 
     @options = {}
     op = OptionParser.new do |opts|
-      opts.banner = "Usage: script.rb [options]"
+      opts.banner = "Usage: main.rb [options]"
 
       opts.on("-v", "--verbose", "Run verbosely") do |v|
         @options[:verbose] = v
