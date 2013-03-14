@@ -26,7 +26,11 @@ Rake::PackageTask.new("findporn-java", :noversion) do |p|
   p.need_tar_gz = true
   p.need_zip = true
   p.package_files.include("class/*")
+
+  p.package_files.include("lib/*")
+  p.package_files.exclude("lib/jruby-complete-1.7.3.jar")
+
   p.package_files.include("config.yml")
   p.package_files.include("queries")
-  p.package_files.include("jruby-gems.jar")
+  p.package_files.include("run.sh")
 end
