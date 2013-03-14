@@ -12,7 +12,7 @@ task :test do
 end
 
 task :compile => [:test, :clean] do
-  sh "jruby -S jrubyc -t class *.rb"
+  sh "cd src; jruby -S jrubyc -t ../class *.rb; cd .."
 end
 
 task :package => :compile

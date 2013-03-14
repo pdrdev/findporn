@@ -1,5 +1,5 @@
 require "rspec"
-require "./cookie_manager"
+require "./src/cookie_manager"
 
 describe CookieManager do
 
