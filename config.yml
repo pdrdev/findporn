@@ -1,6 +1,11 @@
-login: YOUR_LOGIN
-password: YOUR_PASSWORD
+# Put your pornolab.net credentials here
+login: YOUR_PORNOLAB_NET_LOGIN
+password: YOUR_PORNOLAB_NET_PASSWORD
 
+
+
+
+# DON'T TOUCH IT!
 host: pornolab.net
 protocol: http
 login_path: /forum/login.php
