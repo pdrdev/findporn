@@ -8,7 +8,7 @@ require './href'
 
 # main class
 # logs in
-# runs queries
+# runs queries.txt
 class FindPorn
 
   def initialize(opt_processor)
@@ -66,9 +66,9 @@ class FindPorn
     doc.xpath("//a[@class='med tLink bold']").take(@opt_processor.max_hrefs).map{|s| Href.new(s)}
   end
 
-  # read queries from the text file
+  # read queries.txt from the text file
   def get_queries
-    text = File.open(Util.root + 'queries').read # TODO handle errors
+    text = File.open(Util.root + 'queries.txt').read # TODO handle errors
     lines = text.lines
 
     # removing comments
