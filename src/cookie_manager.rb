@@ -22,17 +22,17 @@ class CookieManager
   end
 
   def save_cookies
-    File.open("cookies", "w") do |f|
+    File.open(Util.root + "cookies", "w") do |f|
       f.write(@packed_cookies)
     end
   end
 
   def read_cookies
-    if !File.exists?("cookies")
+    if !File.exists?(Util.root + "cookies")
       return ''
     end
     res = ''
-    File.open("cookies", "r") do |f|
+    File.open(Util.root + "cookies", "r") do |f|
       res = f.readline
     end
     res

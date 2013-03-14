@@ -3,7 +3,7 @@ require 'yaml'
 class Settings
   def initialize
     # TODO No such file error handler
-    @properties = YAML.load_file("config.yml")
+    @properties = YAML.load_file(Util.root + "config.yml")
   end
 
   def get(name)

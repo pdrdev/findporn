@@ -7,4 +7,8 @@ module Util extend self
       puts message
     end
   end
+
+  def self.root
+    File.dirname(__FILE__) + "/.." + "/"
+  end
 end

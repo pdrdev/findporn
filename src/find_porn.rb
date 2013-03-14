@@ -68,13 +68,13 @@ class FindPorn
 
   # read queries from the text file
   def get_queries
-    text = File.open('queries').read # TODO handle errors
+    text = File.open(Util.root + 'queries').read # TODO handle errors
     text.lines.select{|line| !line.strip!.empty?}
   end
 
   # TODO use templates or something
   def print_results(hrefs_for_queries)
-    File.open("result.html", "w") do |f|
+    File.open(Util.root + "result.html", "w") do |f|
       f.write '<?xml version="1.0" encoding="UTF-8"?>'
       f.write("<html>")
       f.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
