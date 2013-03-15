@@ -19,14 +19,15 @@ class FindPorn
     @search_host = @config.get('host')
     @search_path = @config.get('search_path')
     @login_args = {'mode' => 'login', @config.get('login_field_name') => @config.get('login'), @config.get('password_field_name') => @config.get('password'), 'login' => 'Login', 'redirect' => './index.php?'}
-    @login_attempted = false
+    @login_attempts = 0
   end
 
   def login
-    if @login_attempted
+    if @login_attempts > 2
       Util.log "Login failed. Check your login and password."
-      exit(1)
+      java.lang.System.exit(0)
     end
+    @login_attempts += 1
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
     if !check_login(login_result)
       Util.log("Login attempt failed. Retrying...", true)
@@ -36,7 +37,6 @@ class FindPorn
       Util.log("Login succeeded.", true)
     end
     @cookie_manager.pack_cookies(login_result.get_fields('Set-cookie'), true)
-    @login_attempted = true
   end
 
   # assume login is successful if there's no "send password" element in response body
