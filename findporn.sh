@@ -1,2 +1,3 @@
 #!/bin/bash
-java -cp "lib/*:class" main -v
+java -cp "lib/*:class" main "$@"
+

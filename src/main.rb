@@ -15,7 +15,7 @@ Util.opt_processor = opt_processor
 
 if opt_processor.error?
   Util.log opt_processor.error_message
-  exit(1)
+  java.lang.System.exit(0)
 end
 
 start_time = Time.new

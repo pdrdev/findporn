@@ -25,10 +25,12 @@ class OptProcessor
     end
 
     begin op.parse! args
-    rescue OptionParser::InvalidOption => e
+    rescue OptionParser::InvalidOption => parseException
       @error = true
-      @error_message = e.to_s + "\n" + op.to_s
+      @error_message = parseException.to_s + "\n" + op.to_s
+    rescue Exception => e
     end
+
   end
 
   def error?
