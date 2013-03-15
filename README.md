@@ -8,7 +8,7 @@ Binary distributions
 
 Binary distributions are available here: https://sourceforge.net/projects/findporn/files/
 
-*Unpack it
+* Unpack it
 * Set your login and password for pornolab.net in config.yml
 * Add your queries to queries.txt
 * Run findporn.sh (Linux or Mac) or findporn.bat (Windows). Only thing you need is java 1.6 or higher
