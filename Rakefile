@@ -16,12 +16,6 @@ task :compile => [:test, :clean] do
 end
 
 task :package => :compile
-Rake::PackageTask.new("findporn", :noversion) do |p|
-  p.need_tar_gz = true
-  p.package_files.include("*.rb")
-  p.package_files.include("config.yml")
-end
-
 Rake::PackageTask.new("findporn-java", :noversion) do |p|
   p.need_tar_gz = true
   p.need_zip = true
