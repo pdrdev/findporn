@@ -33,4 +33,5 @@ Rake::PackageTask.new("findporn-java", :noversion) do |p|
   p.package_files.include("config.yml")
   p.package_files.include("queries.txt")
   p.package_files.include("findporn.sh")
+  p.package_files.include("README.md")
 end
