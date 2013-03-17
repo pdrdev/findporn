@@ -43,7 +43,25 @@ class FindPorn
   def check_login(response)
     doc = Nokogiri::HTML(response.body)
     send_password_links = doc.xpath("//a[@href='profile.php?mode=sendpassword']")
-    return @cookie_manager.has_valid_cookies?(response) || (send_password_links.empty? && !response.body.empty?)
+
+    is_valid = @cookie_manager.has_valid_cookies?(response) || (send_password_links.empty? && !response.body.empty?)
+
+    if is_valid
+       return true
+    end
+    check_captcha doc
+    false
+  end
+
+  def check_captcha(doc)
+    if is_captcha_required doc
+      Util.log "pornolab.net requires captcha. Please try again later."
+      java.lang.System.exit(0)
+    end
+  end
+
+  def is_captcha_required(doc)
+    !(doc.to_s.index "captcha").nil?
   end
 
   def do_search
