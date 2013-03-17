@@ -1,6 +1,6 @@
 require 'rake/packagetask'
 
-task :default => [:clean, :test, :compile, :_package]
+task :default => [:clean, :test, :compile, :_package, :post_package]
 task :clean do
   sh "rm -rf class/*"
   sh "rm -rf pkg"
@@ -103,3 +103,8 @@ task :_package => [:compile] do
   Rake::Task["pack_win"].invoke
 end
 
+task :post_package => [:package] do
+  load_saved_root_files
+  sh 'rm findporn.bat'
+  sh 'rm findporn.sh'
+end
