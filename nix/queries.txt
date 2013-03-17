@@ -1,0 +1,11 @@
+# Add your queries below
+# Empty lines are ignored
+# Text from the # character to the end of the line is ignored
+# Use quotes to search for the exact phrase
+# Use - character to remove a term from the results
+# See examples below
+
+# Example queries:
+sex
+sex -gay
+"Sasha Grey"
