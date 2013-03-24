@@ -109,6 +109,7 @@ class FindPorn
       f.write '<?xml version="1.0" encoding="UTF-8"?>'
       f.write("<html>")
       f.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
+      f.write '<style type="text/css"> a:visited {color:white;} body {background-color:white;} </style>'
       f.write("<body>")
       hrefs_for_queries.each do |hrefs_for_query|
         f.write("<h3>#{hrefs_for_query[:query]}</h3>")
