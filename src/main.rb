@@ -1,6 +1,8 @@
 require "./find_porn"
 require "./util.rb"
 require "./opt_processor"
+require "./section.rb"
+require "./queries_doc.rb"
 
 require "optparse"
 

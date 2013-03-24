@@ -65,12 +65,17 @@ class FindPorn
   end
 
   def do_search
-    queries = get_queries
-    hrefs_for_queries = []
-    queries.each do |query|
-      hrefs_for_queries << {:query => query, :hrefs => find_hrefs(query)}
+    query_doc = QueriesDoc.from_file_name Util.root + 'queries.txt'
+    get_hrefs_for_doc query_doc
+    print_results query_doc
+  end
+
+  def get_hrefs_for_doc(query_doc)
+    query_doc.sections.each do |section|
+      section.queries.each do |query|
+        section.query_to_hrefs(query, find_hrefs(query + " " + section.append))
+      end
     end
-    print_results hrefs_for_queries
   end
 
   def find_hrefs(query)
@@ -104,20 +109,26 @@ class FindPorn
   end
 
   # TODO use templates or something
-  def print_results(hrefs_for_queries)
+  def print_results(queries_doc)
     File.open(Util.root + "result.html", "w") do |f|
       f.write '<?xml version="1.0" encoding="UTF-8"?>'
       f.write("<html>")
       f.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>'
-      f.write '<style type="text/css"> a:visited {color:white;} body {background-color:white;} </style>'
+      f.write '<style type="text/css"> a:visited {color:gray;} body {background-color:white;} </style>'
       f.write("<body>")
-      hrefs_for_queries.each do |hrefs_for_query|
-        f.write("<h3>#{hrefs_for_query[:query]}</h3>")
-        hrefs_for_query[:hrefs].each do |href|
-          f.write("<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>")
+      queries_doc.sections.each do |section|
+        f.write("<h1>#{section.name}</h1>")
+        section.queries_to_hrefs.each do |query_to_hrefs|
+          query = query_to_hrefs[:query]
+          hrefs = query_to_hrefs[:hrefs]
+          f.write("<h3>#{query}</h3>")
+          hrefs.each do |href|
+            f.write("<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>")
+          end
+
         end
+        f.write("</body></html>")
       end
-      f.write("</body></html>")
     end
   end
 end

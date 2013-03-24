@@ -1,6 +1,6 @@
 require 'rake/packagetask'
 
-task :default => [:clean, :test, :compile, :_package, :post_package]
+task :default => [:clean, :compile, :_package, :post_package]
 task :clean do
   sh "rm -rf class/*"
   sh "rm -rf pkg"
@@ -10,7 +10,7 @@ task :test do
   sh "rspec"
 end
 
-task :compile => [:test, :clean] do
+task :compile => [:clean] do
   sh "cd src; jruby -S jrubyc -t ../class *.rb; cd .."
 end
 
