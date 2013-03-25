@@ -49,7 +49,7 @@ class CookieManager
   end
 
   def read_cookies
-    if !File.exists?(Util.root + COOKIES_FILE_NAME)
+    unless File.exists?(Util.root + COOKIES_FILE_NAME)
       return ''
     end
     res = ''

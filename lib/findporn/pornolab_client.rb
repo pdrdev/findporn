@@ -18,7 +18,7 @@ class PornolabClient
     end
     @login_attempts += 1
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
-    if !check_login(login_result)
+    unless check_login(login_result)
       Util.log("Login attempt failed. Retrying...", true)
       login
       return
@@ -31,7 +31,7 @@ class PornolabClient
   def find_hrefs(query, max_hrefs_per_query = 10)
     http = Net::HTTP.new(@search_host)
     response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
-    if !check_login(response)
+    unless check_login(response)
       login
       return find_hrefs(query)
     end

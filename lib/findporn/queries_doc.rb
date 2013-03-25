@@ -59,7 +59,7 @@ class QueriesDoc
   def remove_comments_and_trim(lines)
     lines.map do |line|
       comment_index = line.index '#'
-      if !comment_index.nil?
+      unless comment_index.nil?
         line[0...comment_index].strip
       else
         line.strip
