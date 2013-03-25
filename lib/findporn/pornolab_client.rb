@@ -26,7 +26,7 @@ class PornolabClient
     else
       Util.log("Login succeeded.", true)
     end
-    @cookie_manager.pack_cookies(login_result.get_fields('Set-cookie'), true)
+    @cookie_manager.set_cookies_from_server_response(login_result, true)
   end
 
   def find_hrefs(query, max_hrefs_per_query = 10)

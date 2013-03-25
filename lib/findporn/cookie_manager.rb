@@ -1,6 +1,6 @@
 # cookies are stored in 'cookies' text file
 class CookieManager
-  attr_accessor :packed_cookies
+  COOKIES_FILE_NAME = 'cookies'
 
   def initialize
     @packed_cookies = nil
@@ -11,31 +11,25 @@ class CookieManager
     read_cookies
   end
 
-  # save cookies and return them
-  def pack_cookies(cookie_array, save=true)
+  # save cookies
+  def set_cookies_from_server_response(server_response, save_to_file=true)
+    cookie_array = server_response.get_fields('Set-cookie')
     cookie_hash = cookie_array_to_hash(cookie_array)
 
     #sort so order will be deterministic
     @packed_cookies = cookie_hash.map { |k, v| "#{k}=#{v}"}.sort.join('; ')
-    save_cookies if save
-    @packed_cookies
+    save_cookies_to_file if save_to_file
   end
 
-  def save_cookies
-    File.open(Util.root + "cookies", "w") do |f|
-      f.write(@packed_cookies)
-    end
+  def has_valid_cookies?(response)
+    response != nil && response.get_fields('Set-cookie') != nil && !response.get_fields('Set-cookie').empty? && valid_cookies?(response.get_fields('Set-cookie'))
   end
 
-  def read_cookies
-    if !File.exists?(Util.root + "cookies")
-      return ''
-    end
-    res = ''
-    File.open(Util.root + "cookies", "r") do |f|
-      res = f.readline
-    end
-    res
+  private
+
+  def valid_cookies?(cookie_array)
+    cookie_hash = cookie_array_to_hash(cookie_array)
+    cookie_hash.has_key?('bb_data') && cookie_hash['bb_data'] != 'deleted'
   end
 
   def cookie_array_to_hash(cookie_array)
@@ -48,12 +42,20 @@ class CookieManager
     cookie_hash
   end
 
-  def has_valid_cookies?(response)
-    response != nil && response.get_fields('Set-cookie') != nil && !response.get_fields('Set-cookie').empty? && valid_cookies?(response.get_fields('Set-cookie'))
+  def save_cookies_to_file
+    File.open(Util.root + COOKIES_FILE_NAME, "w") do |f|
+      f.write(@packed_cookies)
+    end
   end
 
-  def valid_cookies?(cookie_array)
-    cookie_hash = cookie_array_to_hash(cookie_array)
-    cookie_hash.has_key?('bb_data') && cookie_hash['bb_data'] != 'deleted'
+  def read_cookies
+    if !File.exists?(Util.root + COOKIES_FILE_NAME)
+      return ''
+    end
+    res = ''
+    File.open(Util.root + COOKIES_FILE_NAME, "r") do |f|
+      res = f.readline
+    end
+    res
   end
 end

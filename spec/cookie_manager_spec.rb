@@ -7,8 +7,9 @@ describe CookieManager do
     @cookie_manager = CookieManager.new
   end
 
-  it "packs cookies" do
-    @cookie_manager.pack_cookies(
+  it "set cookies" do
+    server_response_mock = mock(Net::HTTPResponse)
+    server_response_mock.stub!(:get_fields).and_return(
         [
             'phpbb3_r3qux_u=1; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly',
             'phpbb3_r3qux_k=; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly',
@@ -16,9 +17,11 @@ describe CookieManager do
             'phpbb3_r3qux_u=2; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly',
             'phpbb3_r3qux_k=; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly',
             'phpbb3_r3qux_sid=cdd6ac5f35b45aa3b582d1320f13d680; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly'
-        ],
-        false #don't save
+        ]
     )
-    @cookie_manager.packed_cookies.should == 'phpbb3_r3qux_k=; phpbb3_r3qux_sid=cdd6ac5f35b45aa3b582d1320f13d680; phpbb3_r3qux_u=2'
+    @cookie_manager.set_cookies_from_server_response(server_response_mock, false)
+    @cookie_manager.get_cookies.should == 'phpbb3_r3qux_k=; phpbb3_r3qux_sid=cdd6ac5f35b45aa3b582d1320f13d680; phpbb3_r3qux_u=2'
   end
+
+
 end
