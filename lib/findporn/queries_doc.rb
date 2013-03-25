@@ -42,7 +42,7 @@ class QueriesDoc
     attribute_index = s.index attribute_name
     if attribute_index.nil?
       if required
-        raise Exception.new("Section missing required attribute #{attribute_name}")
+        raise FindpornException, "Section missing required attribute #{attribute_name}"
       else
         return ''
       end
@@ -52,7 +52,7 @@ class QueriesDoc
     if !first_quote_index.nil? && !second_quote_index.nil?
       return s[(first_quote_index+1)..(second_quote_index-1)]
     else
-      raise Exception.new("Incorrect definition for section.rb attribute #{attribute_name}")
+      raise FindpornException, "Incorrect definition for section.rb attribute #{attribute_name}"
     end
   end
 

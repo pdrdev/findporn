@@ -1,0 +1,2 @@
+class FindpornException < Exception
+end

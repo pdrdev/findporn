@@ -7,8 +7,7 @@ class Settings
   def get(name)
     res = @properties[name]
     if res.nil?
-      Util.log "Property #{name} doesn't exist in config.yml"
-      exit(1)
+      raise FindpornException, "Property #{name} doesn't exist in config.yml"
     else
       @properties[name]
     end

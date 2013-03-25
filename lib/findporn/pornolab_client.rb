@@ -14,8 +14,7 @@ class PornolabClient
 
   def login
     if @login_attempts > MAX_LOGIN_ATTEMPTS
-      Util.log "Login failed. Check your login and password."
-      java.lang.System.exit(0)
+      raise FindpornException, "Login failed. Check your login and password."
     end
     @login_attempts += 1
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
@@ -43,8 +42,7 @@ class PornolabClient
   private
   def check_captcha(doc)
     if is_captcha_required doc
-      Util.log "pornolab.net requires captcha. Please try again later."
-      java.lang.System.exit(0)
+      raise FindpornException, "pornolab.net requires captcha. Please try again later."
     end
   end
 

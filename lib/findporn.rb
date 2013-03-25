@@ -2,6 +2,7 @@ lib = File.dirname(__FILE__).gsub('file:', '') # jruby adds 'file:' prefix for s
 
 require lib + '/findporn/' + 'cookie_manager'
 require lib + '/findporn/' + 'href'
+require lib + '/findporn/' + 'findporn_exception'
 require lib + '/findporn/' + 'main'
 require lib + '/findporn/' + 'opt_processor'
 require lib + '/findporn/' + 'pornolab_client'
