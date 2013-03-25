@@ -28,7 +28,7 @@ class OptProcessor
     rescue OptionParser::InvalidOption => parseException
       @error = true
       @error_message = parseException.to_s + "\n" + op.to_s
-    rescue Exception => e
+    rescue Exception
     end
 
   end
