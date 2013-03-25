@@ -1,8 +1,8 @@
 lib = File.dirname(__FILE__).gsub('file:', '') # jruby adds 'file:' prefix for some reason
 
 require lib + '/findporn/' + 'cookie_manager'
-require lib + '/findporn/' + 'find_porn'
 require lib + '/findporn/' + 'href'
+require lib + '/findporn/' + 'main'
 require lib + '/findporn/' + 'opt_processor'
 require lib + '/findporn/' + 'pornolab_client'
 require lib + '/findporn/' + 'queries_doc'
@@ -18,4 +18,4 @@ require 'net/http'
 
 require 'nokogiri'
 
-require lib + '/findporn/' + 'main'
+Main.new.run
