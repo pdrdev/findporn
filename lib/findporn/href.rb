@@ -1,7 +1,7 @@
 class Href
-  attr_accessor :title
-  attr_accessor :url
-  attr_accessor :id
+  attr_reader :title
+  attr_reader :url
+  attr_reader :id
 
   def initialize(href_str)
     @doc = href_str
