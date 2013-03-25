@@ -1,59 +1,11 @@
-# main class
-# logs in
-# runs queries.txt
+# kinda main class
+# runs queries
 class FindPorn
 
   def initialize(opt_processor)
-    @cookie_manager = CookieManager.new
     @opt_processor = opt_processor
     @config = Settings.new
-    @login_uri = URI(@config.get('protocol') + '://' + @config.get('host') + @config.get('login_path'))
-    @search_host = @config.get('host')
-    @search_path = @config.get('search_path')
-    @login_args = {'mode' => 'login', @config.get('login_field_name') => @config.get('login'), @config.get('password_field_name') => @config.get('password'), 'login' => 'Login', 'redirect' => './index.php?'}
-    @login_attempts = 0
-  end
-
-  def login
-    if @login_attempts > 2
-      Util.log "Login failed. Check your login and password."
-      java.lang.System.exit(0)
-    end
-    @login_attempts += 1
-    login_result = Net::HTTP.post_form(@login_uri, @login_args)
-    if !check_login(login_result)
-      Util.log("Login attempt failed. Retrying...", true)
-      login
-      return
-    else
-      Util.log("Login succeeded.", true)
-    end
-    @cookie_manager.pack_cookies(login_result.get_fields('Set-cookie'), true)
-  end
-
-  # assume login is successful if there's no "send password" element in response body
-  def check_login(response)
-    doc = Nokogiri::HTML(response.body)
-    send_password_links = doc.xpath("//a[@href='profile.php?mode=sendpassword']")
-
-    is_valid = @cookie_manager.has_valid_cookies?(response) || (send_password_links.empty? && !response.body.empty?)
-
-    if is_valid
-       return true
-    end
-    check_captcha doc
-    false
-  end
-
-  def check_captcha(doc)
-    if is_captcha_required doc
-      Util.log "pornolab.net requires captcha. Please try again later."
-      java.lang.System.exit(0)
-    end
-  end
-
-  def is_captcha_required(doc)
-    !(doc.to_s.index "captcha").nil?
+    @pornolab_client = PornolabClient.new @config
   end
 
   def do_search
@@ -65,20 +17,9 @@ class FindPorn
   def get_hrefs_for_doc(query_doc)
     query_doc.sections.each do |section|
       section.queries.each do |query|
-        section.query_to_hrefs(query, find_hrefs(query + " " + section.append))
+        section.query_to_hrefs(query, @pornolab_client.find_hrefs(query + " " + section.append, @opt_processor.max_hrefs))
       end
     end
-  end
-
-  def find_hrefs(query)
-    http = Net::HTTP.new(@search_host)
-    response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
-    if !check_login(response)
-      login
-      return find_hrefs(query)
-    end
-    doc = Nokogiri::HTML(response.body)
-    doc.xpath("//a[@class='med tLink bold']").take(@opt_processor.max_hrefs).map{|s| Href.new(s)}
   end
 
   # read queries.txt from the text file
