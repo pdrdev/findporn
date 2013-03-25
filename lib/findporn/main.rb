@@ -46,7 +46,7 @@ class Main
   def get_hrefs_for_doc(query_doc)
     query_doc.sections.each do |section|
       section.queries.each do |query|
-        section.query_to_hrefs(query, @pornolab_client.find_hrefs(query + " " + section.append, @opt_processor.max_hrefs))
+        section.add_query_to_hrefs(query, @pornolab_client.find_hrefs(query + " " + section.append, @opt_processor.max_hrefs))
       end
     end
   end

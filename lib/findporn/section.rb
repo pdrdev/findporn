@@ -15,7 +15,7 @@ class Section
     @queries << query
   end
 
-  def query_to_hrefs(query, hrefs)
+  def add_query_to_hrefs(query, hrefs)
     @queries_to_hrefs << {:query => query, :hrefs => hrefs}
   end
 end
