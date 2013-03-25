@@ -1,11 +1,3 @@
-require 'net/http'
-require 'nokogiri'
-
-require './opt_processor'
-require './settings'
-require './cookie_manager'
-require './href'
-
 # main class
 # logs in
 # runs queries.txt

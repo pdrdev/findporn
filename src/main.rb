@@ -1,10 +1,10 @@
-require "./find_porn"
-require "./util.rb"
-require "./opt_processor"
-require "./section.rb"
-require "./queries_doc.rb"
+Dir[File.dirname(__FILE__) + '/*'].each {|file| require file.gsub('file:', '') }
 
-require "optparse"
+require 'optparse'
+require 'yaml'
+require 'net/http'
+
+require 'nokogiri'
 
 def get_opt_processor
   opt_processor

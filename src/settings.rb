@@ -1,5 +1,3 @@
-require 'yaml'
-
 class Settings
   def initialize
     # TODO No such file error handler

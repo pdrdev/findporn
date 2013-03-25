@@ -1,5 +1,5 @@
-require "rspec"
-require "./src/href"
+require 'rspec'
+Dir[File.dirname(__FILE__) + '/../src/*'].each {|file| require file.gsub('file:', '') }
 
 describe Href do
 

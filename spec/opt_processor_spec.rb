@@ -1,6 +1,5 @@
-require "rspec"
-
-require "./src/opt_processor"
+require 'rspec'
+Dir[File.dirname(__FILE__) + '/../src/*'].each {|file| require file.gsub('file:', '') }
 
 describe OptProcessor do
 

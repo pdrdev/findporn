@@ -1,6 +1,5 @@
-require "rspec"
-require "./src/queries_doc"
-require "./src/section"
+require 'rspec'
+Dir[File.dirname(__FILE__) + '/../src/*'].each {|file| require file.gsub('file:', '') }
 
 describe QueriesDoc do
 
