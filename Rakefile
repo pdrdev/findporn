@@ -11,7 +11,7 @@ task :test do
 end
 
 task :compile => [:clean] do
-  sh "cd src; jruby -S jrubyc -t ../class *.rb; cd .."
+  sh "cd lib; jruby -S jrubyc -t ../class .; cd .."
 end
 
 def config_files
@@ -22,9 +22,10 @@ def do_common_packaging_stuff(p)
   p.need_tar_gz = true
   p.need_zip = true
   p.package_files.include("class/*")
+  p.package_files.include("class/findporn/*")
 
-  p.package_files.include("lib/*")
-  p.package_files.exclude("lib/jruby-complete-1.7.3.jar")
+  p.package_files.include("jars/*")
+  p.package_files.exclude("jars/jruby-complete-1.7.3.jar")
 end
 
 def do_win_packaging_stuff(p)

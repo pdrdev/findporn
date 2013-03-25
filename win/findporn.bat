@@ -1,1 +1,1 @@
-java -cp "lib/*;class" main %*
+java -cp "jars/*;class" findporn %*

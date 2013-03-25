@@ -1,11 +1,3 @@
-Dir[File.dirname(__FILE__) + '/*'].each {|file| require file.gsub('file:', '') }
-
-require 'optparse'
-require 'yaml'
-require 'net/http'
-
-require 'nokogiri'
-
 def get_opt_processor
   opt_processor
 end

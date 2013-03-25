@@ -1,0 +1,3 @@
+class PornolabClient
+
+end

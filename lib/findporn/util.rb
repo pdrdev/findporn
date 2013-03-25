@@ -9,6 +9,6 @@ module Util extend self
   end
 
   def self.root
-    File.dirname(__FILE__) + "/.." + "/"
+    File.dirname(__FILE__) + "/../../"
   end
 end

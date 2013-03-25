@@ -1,5 +1,5 @@
 require 'rspec'
-Dir[File.dirname(__FILE__) + '/../src/*'].each {|file| require file.gsub('file:', '') }
+Dir[File.dirname(__FILE__) + '/../lib/*'].each {|file| require file.gsub('file:', '') }
 
 describe QueriesDoc do
 
