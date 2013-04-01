@@ -17,7 +17,7 @@ class QueriesDoc
 
     current_section = Section.new("", "")
     lines.each do |line|
-      if is_section_definition line
+      if section_definition? line
         @sections << current_section unless current_section.queries.length == 0 && current_section.name == ''
         section_name, section_append = get_name_and_append_from_section_string line
         current_section = Section.new section_name, section_append
@@ -29,7 +29,7 @@ class QueriesDoc
   end
 
   private
-  def is_section_definition(s)
+  def section_definition?(s)
     section_word_index = s.index "$section"
     !section_word_index.nil?
   end
