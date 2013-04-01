@@ -18,7 +18,7 @@ class PornolabClient
     end
     @login_attempts += 1
     login_result = Net::HTTP.post_form(@login_uri, @login_args)
-    unless check_login(login_result)
+    unless login_successful?(login_result)
       Util.log("Login attempt failed. Retrying...", true)
       login
       return
@@ -31,7 +31,7 @@ class PornolabClient
   def find_hrefs(query, max_hrefs_per_query = 10)
     http = Net::HTTP.new(@search_host)
     response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
-    unless check_login(response)
+    unless login_successful?(response)
       login
       return find_hrefs(query)
     end
@@ -51,7 +51,7 @@ class PornolabClient
   end
 
   # assume login is successful if there's no "send password" element in response body
-  def check_login(response)
+  def login_successful?(response)
     doc = Nokogiri::HTML(response.body)
     send_password_links = doc.xpath("//a[@href='profile.php?mode=sendpassword']")
 
