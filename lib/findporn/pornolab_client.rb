@@ -41,12 +41,12 @@ class PornolabClient
 
   private
   def check_captcha(doc)
-    if is_captcha_required doc
+    if captcha? doc
       raise FindpornException, "pornolab.net requires captcha. Please try again later."
     end
   end
 
-  def is_captcha_required(doc)
+  def captcha?(doc)
     !(doc.to_s.index "captcha").nil?
   end
 
