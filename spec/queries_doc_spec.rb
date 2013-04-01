@@ -5,8 +5,8 @@ describe QueriesDoc do
 
   it "2 empty sections" do
     input =
-        '$section name="section1" append="append1"' + "\n"\
-        '$section name="section2" append="append2"' + "\n"
+        '@section name="section1" append="append1"' + "\n"\
+        '@section name="section2" append="append2"' + "\n"
     queries_doc = QueriesDoc.from_string input
     sections = queries_doc.sections
 
@@ -23,7 +23,7 @@ describe QueriesDoc do
 
   it "1 section with queries" do
     input =
-        '$section name="section1" append="append1"' + "\n"\
+        '@section name="section1" append="append1"' + "\n"\
         'query1' + "\n"\
         'query2'
 

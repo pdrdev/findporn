@@ -30,7 +30,7 @@ class QueriesDoc
 
   private
   def section_definition?(s)
-    section_word_index = s.index "$section"
+    section_word_index = s.index "@section"
     !section_word_index.nil?
   end
 
