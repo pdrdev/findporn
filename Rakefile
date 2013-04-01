@@ -13,6 +13,10 @@ task :test do
 end
 
 task :compile => [:clean] do
+  begin
+    sh "mkdir class"
+  rescue Exception
+  end
   sh "cd lib; jruby -S jrubyc -t ../class .; cd .."
 end
 
