@@ -50,7 +50,7 @@ class OptProcessor
     end
   end
 
-  def verbose
+  def verbose?
     if @options.has_key?(:verbose)
       @options[:verbose]
     else

@@ -23,17 +23,17 @@ describe OptProcessor do
   it "should use default verbose" do
     processor = OptProcessor.new([])
     processor.error?.should == false
-    processor.verbose.should == OptProcessor::DEFAULT_VERBOSE
+    processor.verbose?.should == OptProcessor::DEFAULT_VERBOSE
   end
 
   it "should be verbose if specified" do
     processor = OptProcessor.new(['-v'])
     processor.error?.should == false
-    processor.verbose.should == true
+    processor.verbose?.should == true
 
     processor = OptProcessor.new(['--verbose'])
     processor.error?.should == false
-    processor.verbose.should == true
+    processor.verbose?.should == true
   end
 
   it "should use default max-hrefs" do
