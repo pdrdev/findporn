@@ -1,6 +1,8 @@
 require 'rake/packagetask'
 
-task :default => [:clean, :compile, :_package, :post_package]
+task :default => [:test, :clean, :compile, :_package, :post_package]
+
+
 task :clean do
   sh "rm -rf class/*"
   sh "rm -rf pkg"
