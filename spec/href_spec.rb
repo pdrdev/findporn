@@ -1,5 +1,7 @@
 require 'rspec'
-Dir[File.dirname(__FILE__) + '/../lib/*'].each {|file| require file.gsub('file:', '') }
+require 'nokogiri'
+
+Dir[File.dirname(__FILE__) + '/../lib/findporn/*'].each {|file| require file.gsub('file:', '') }
 
 describe Href do
 
