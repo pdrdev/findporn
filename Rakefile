@@ -89,7 +89,7 @@ end
 
 task :_package => [:compile] do
   task :pack_nix do
-    Rake::PackageTask.new("findporn-nix", :noversion) do |p|
+    Rake::PackageTask.new("findporn-linux-mac", :noversion) do |p|
       do_common_packaging_stuff p
       do_nix_packaging_stuff p
     end
