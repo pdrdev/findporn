@@ -16,7 +16,7 @@ class Main
       start_time = Time.new
       Util.log("Started at #{start_time.inspect}", true)
 
-      if @opt_processor.do_login
+      if @opt_processor.do_login?
         # forced login
         @pornolab_client.login
       end

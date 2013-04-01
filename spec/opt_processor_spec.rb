@@ -11,13 +11,13 @@ describe OptProcessor do
   it "should use default do-login" do
     processor = OptProcessor.new([])
     processor.error?.should == false
-    processor.do_login.should == OptProcessor::DEFAULT_TO_LOGIN
+    processor.do_login?.should == OptProcessor::DEFAULT_TO_LOGIN
   end
 
   it "should log in if there's the arg'" do
     processor = OptProcessor.new(['--do-login'])
     processor.error?.should == false
-    processor.do_login.should == true
+    processor.do_login?.should == true
   end
 
   it "should use default verbose" do

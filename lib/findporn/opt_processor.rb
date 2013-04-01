@@ -42,7 +42,7 @@ class OptProcessor
   end
 
   # force login
-  def do_login
+  def do_login?
     if @options.has_key?(:do_login)
       @options[:do_login]
     else
