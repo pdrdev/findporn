@@ -79,7 +79,10 @@ end
 
 def load_saved_root_files
   config_files.each do |f|
-    sh "cp -f temp/#{f} ."
+    begin
+      sh "cp -f temp/#{f} ."
+    rescue Exception
+    end
   end
   sh "rm -rf temp"
 end
