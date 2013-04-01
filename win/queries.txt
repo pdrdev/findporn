@@ -8,5 +8,10 @@
 # Example queries:
 sex
 sex -gay
+
+# An example section. Use (optional) append attribute to append something to all queries in the section
+# You can add as many sections as you like (or you can use no sections at all)
+@section name="Actresses" append="-lesbian -solo"
+Stoya # Equivalent to 'Stoya -lesbian -solo' query due to the 'append' attribute
 "Sasha Grey"
 

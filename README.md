@@ -3,23 +3,23 @@ findporn
 
 Track new releases on pornolab.net
 
-Binary distributions
+Installation from a binary distribution:
 -------
 
-Binary distributions are available here: https://sourceforge.net/projects/findporn/files/
-
+* Install java 1.6 or higher from http://www.java.com/
+* Download the latest .zip or .tar.gz file from https://sourceforge.net/projects/findporn/files/
 * Unpack it
 * Set your login and password for pornolab.net in config.yml
-* Add your queries to queries.txt
-* Run findporn.sh (Linux or Mac) or findporn.bat (Windows). Only thing you need is java 1.6 or higher
+* Add your queries to queries.txt (you'll find instructions and examples in that file)
+* Run findporn.sh (Linux or Mac) or findporn.bat (Windows). Use -v command line option for verbose output
 * Results will show up in result.html
 
-Compiling from sources
+Compiling from sources (for Linux and Mac users, not available for Windows yet)
 -------
 
-* Install JRuby
-* Install rake
-* Checkout latest sources
-* Run rake
+* Install JRuby from http://jruby.org/
+* Install Bundler from http://gembundler.com/
+* Clone git repo: https://github.com/pdrdev/findporn.git
+* Run "bundle install"
+* Run "bundle exec rake"
 * .tar.gz and .zip files will show up in pkg directory
-
