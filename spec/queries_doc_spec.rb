@@ -57,4 +57,22 @@ describe QueriesDoc do
 
     sections[0].queries[0].should == 'query1'
   end
+
+  it "counts queries" do
+    input =
+        '@section name="section1" append="append1"' + "\n"\
+        'query1' + "\n"\
+        'query2' + "\n"\
+        '@section name="section2" append="append2"' + "\n"\
+        'query3' + "\n"\
+        '' + "\n"\
+        '# some comment' + "\n"\
+        '   # another comment' + "\n"\
+        'query4' + "\n"\
+        'query5' + "\n"
+
+    queries_doc = QueriesDoc.from_string input
+    queries_doc.size.should == 5
+  end
+
 end
