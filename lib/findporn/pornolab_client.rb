@@ -47,7 +47,7 @@ class PornolabClient
   end
 
   def captcha?(doc)
-    !(doc.to_s.index "captcha").nil?
+    doc.xpath('//img[starts-with(@src, "http://static.pornolab.net/captcha")]').size > 0
   end
 
   # assume login is successful if there's no "send password" element in response body
@@ -58,9 +58,10 @@ class PornolabClient
     is_valid = @cookie_manager.has_valid_cookies?(response) || (send_password_links.empty? && !response.body.empty?)
 
     if is_valid
-      return true
+      true
+    else
+      check_captcha doc
+      false
     end
-    check_captcha doc
-    false
   end
 end
