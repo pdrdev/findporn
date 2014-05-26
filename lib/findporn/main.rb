@@ -30,7 +30,7 @@ class Main
       Util.log("Execution time: #{stop_time - start_time} seconds", true)
     rescue Exception => e
       Util.log e.message
-      java.lang.System.exit 0
+      exit 0
     end
   end
 
