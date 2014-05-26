@@ -1,4 +1,4 @@
-lib = File.dirname(__FILE__).gsub('file:', '') # jruby adds 'file:' prefix for some reason
+lib = File.expand_path(File.dirname(__FILE__)).gsub('file:', '') # jruby adds 'file:' prefix for some reason
 
 require lib + '/findporn/' + 'cookie_manager'
 require lib + '/findporn/' + 'href'
