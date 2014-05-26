@@ -3,6 +3,7 @@ pkg/
 Gemfile.lock
 /README.txt
 /queries.txt
+/findporn.sh
 cookies
 result.html
 plan

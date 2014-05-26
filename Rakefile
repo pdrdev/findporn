@@ -12,7 +12,7 @@ task :test do
 end
 
 def config_files
-  ['config.yml', 'queries.txt', 'README.txt']
+  ['config.yml', 'queries.txt', 'README.txt', 'findporn.sh']
 end
 
 def do_common_packaging_stuff(p)
