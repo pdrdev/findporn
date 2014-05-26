@@ -1,9 +1,10 @@
 .idea/
 pkg/
 Gemfile.lock
-README.txt
-queries.txt
+/README.txt
+/queries.txt
 cookies
 result.html
 plan
+backup/
 

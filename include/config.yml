@@ -1,0 +1,15 @@
+# Put your pornolab.net credentials here
+login: YOUR_PORNOLAB_NET_LOGIN
+password: YOUR_PORNOLAB_NET_PASSWORD
+
+
+
+
+# DON'T TOUCH IT!
+host: pornolab.net
+protocol: http
+login_path: /forum/login.php
+search_path: /forum/tracker.php
+
+login_field_name: login_username
+password_field_name: login_password
