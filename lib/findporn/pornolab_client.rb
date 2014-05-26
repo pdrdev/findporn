@@ -2,6 +2,7 @@
 # Takes care of all pornolab-specific stuff
 class PornolabClient
   MAX_LOGIN_ATTEMPTS = 2
+  MAX_HTTP_ATTEMPTS = 3
 
   def initialize(settings)
     @cookie_manager = CookieManager.new
@@ -30,7 +31,23 @@ class PornolabClient
 
   def find_hrefs(query, max_hrefs_per_query = 10)
     http = Net::HTTP.new(@search_host)
-    response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
+    http.read_timeout = 3
+
+    attempts = 0
+    while true do
+      attempts += 1
+      begin
+        response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
+        break
+      rescue Exception => e
+        if attempts <= MAX_HTTP_ATTEMPTS then
+          Util.log "HTTP request failed: #{e.message}. Retrying..."
+        else
+          raise FindpornException, "Unable to process HTTP request after #{attempts} attempts."
+        end
+      end
+    end
+
     unless login_successful?(response)
       login
       return find_hrefs(query)
