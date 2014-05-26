@@ -1,5 +1,8 @@
+.idea/
 pkg/
-*.lock
+Gemfile.lock
 README.txt
 queries.txt
+cookies
+result.html
 
