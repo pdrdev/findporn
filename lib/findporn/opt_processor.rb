@@ -32,8 +32,14 @@ class OptProcessor
     rescue Exception
     end
 
-    if !ARGV.empty? then
-      @options[:action] = ARGV.pop
+    if !args.empty? then
+      action = args.pop
+      if ['all', 'sync', 'render'].include? action then
+        @options[:action] = action
+      else
+        @error = true
+        @error_message = "Action is not supported: #{action}"
+      end
     end
   end
 

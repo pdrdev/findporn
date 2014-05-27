@@ -47,4 +47,17 @@ describe OptProcessor do
     processor.error?.should == false
     processor.max_hrefs.should == 123
   end
+
+  it "should fail on an unsupported action" do
+    processor = OptProcessor.new(['unknown_action'])
+    processor.error?.should == true
+  end
+
+  it "should recognize supported action" do
+    ['sync', 'render', 'all'].each do |action|
+      processor = OptProcessor.new(['-v', action])
+      processor.error?.should == false
+      processor.action.should == action
+    end
+  end
 end

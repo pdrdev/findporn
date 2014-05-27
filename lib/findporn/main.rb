@@ -33,8 +33,7 @@ class Main
       Util.log("Stopped at #{stop_time.inspect}", true)
       Util.log("Execution time: #{stop_time - start_time} seconds", true)
     rescue Exception => e
-      Util.log e.message.inspect
-      Util.log e.backtrace
+      Util.log e.message.to_s
       exit 0
     end
   end
@@ -68,10 +67,7 @@ class Main
   def init_and_check_options
     Util.opt_processor = @opt_processor
     if @opt_processor.error?
-      raise FindpornException, @opt_processor.error_message
-    end
-    if !['all', 'sync', 'render'].include? @opt_processor.action
-      raise FindpornException, "Action is not supported: #{@opt_processor.action}"
+      raise FindpornException.new @opt_processor.error_message
     end
   end
 
