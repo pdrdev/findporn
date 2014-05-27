@@ -9,6 +9,11 @@ class QueriesDoc
     QueriesDoc.new s
   end
 
+  def size
+    @sections.inject(0){|sum, section| sum + section.queries.size}
+  end
+
+  private
   def initialize(s)
     @sections = Array.new
     lines = s.lines
@@ -28,11 +33,6 @@ class QueriesDoc
     @sections << current_section unless current_section.queries.length == 0 && current_section.name == ''
   end
 
-  def size
-    @sections.inject(0){|sum, section| sum + section.queries.size}
-  end
-
-  private
   def section_definition?(s)
     section_word_index = s.index "@section"
     !section_word_index.nil?
