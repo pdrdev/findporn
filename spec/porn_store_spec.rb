@@ -3,9 +3,8 @@ Dir[File.dirname(__FILE__) + '/../lib/findporn/*'].each {|file| require file.gsu
 
 describe PornStore do
 
-  it 'loads PornStore' do
-    input =
-        '@section name="section1" append="append1"' + "\n"\
+  TEST_DOC_PORN_STORE =
+      '@section name="section1" append="append1"' + "\n"\
         'query1' + "\n"\
         'query2' + "\n"\
         '@section name="section2" append="append2"' + "\n"\
@@ -13,7 +12,8 @@ describe PornStore do
         'query4' + "\n"\
         'query5' + "\n"
 
-    queries_doc = QueriesDoc.from_string input
+  it 'loads PornStore' do
+    queries_doc = QueriesDoc.from_string TEST_DOC_PORN_STORE
 
     pornolab_client = double(PornolabClient)
     pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url')])
@@ -24,5 +24,16 @@ describe PornStore do
 
     porn_store.sections[0].queries[0].hrefs[0].title.should == 'stub_title'
     porn_store.sections[0].queries[0].hrefs[0].url.should == 'stub_url'
+  end
+
+  it 'saves PornStore' do
+    queries_doc = QueriesDoc.from_string TEST_DOC_PORN_STORE
+    pornolab_client = double(PornolabClient)
+    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url')])
+    porn_store = PornStore.create(queries_doc, pornolab_client)
+
+    sql_client = double(SqlClient)
+    sql_client.should_receive(:save_porn_store).with(porn_store)
+    porn_store.save sql_client
   end
 end

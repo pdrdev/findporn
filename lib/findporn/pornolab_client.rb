@@ -37,7 +37,7 @@ class PornolabClient
     while true do
       attempts += 1
       begin
-        response = http.post(@search_path, "max=1&to=1&nm=#{query}", {'Cookie' => @cookie_manager.get_cookies})
+        response = http.post(@search_path, "max=1&to=1&nm=#{query.value}", {'Cookie' => @cookie_manager.get_cookies})
         break
       rescue Exception => e
         if attempts <= MAX_HTTP_ATTEMPTS then
@@ -53,7 +53,7 @@ class PornolabClient
       return find_hrefs(query)
     end
     doc = Nokogiri::HTML(response.body)
-    doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query).map{|s| Href.create s}
+    doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query).map{|s| Href.create(s, query)}
   end
 
   private

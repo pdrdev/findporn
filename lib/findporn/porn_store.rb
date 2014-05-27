@@ -27,6 +27,7 @@ class PornStore
 
   def save(db_client)
     Util.log 'Saving PornStore'
+    db_client.save_porn_store self
   end
 
   private

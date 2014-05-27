@@ -3,19 +3,22 @@
 class Href
   attr_reader :title
   attr_reader :url
+  attr_reader :query
+  attr_accessor :id
 
-  def self.create(href_str)
+  def self.create(href_str, query = nil)
     doc = href_str
     title = doc.text
     url = doc.get_attribute('href')
 
-    Href.new(title, url)
+    Href.new(title, url, query)
   end
 
   private
 
-  def initialize(title, url)
+  def initialize(title, url, query = nil)
     @title = title
     @url = url
+    @query = query
   end
 end

@@ -10,32 +10,87 @@ class SqlClient
     if !client.consistent?
       client.bootstrap
     end
+    client
   end
 
   def initialize(db)
     @db = db
   end
 
-  def bootstrap
-    Util.log 'Bootstrapping database'
-
-    Util.log 'Dropping all tables'
-    drop_all_tables
-
-    Util.log 'Creating table: sections'
-    @db.execute('create table sections (id INTEGER PRIMARY KEY, name TEXT, appendix TEXT);')
-
-    Util.log 'Creating table: queries'
-    @db.execute('create table queries (id INTEGER PRIMARY KEY, section_id INT, value TEXT, appendix TEXT);')
-
-    Util.log 'Creating table: hrefs'
-    @db.execute('create table hrefs (id INTEGER PRIMARY KEY, query_id INTEGER, value TEXT, appendix TEXT, size INTEGER, size_raw TEXT);')
-
-    Util.log 'Bootstrapping competed'
+  def save_porn_store(porn_store)
+    porn_store.sections.each { |section| save_section(section) }
   end
 
-  def drop_all_tables
-    TABLE_NAMES.each { |table_name| @db.execute "drop table if exists #{table_name}" }
+  def save_section(section)
+    section_id = get_section_id(section)
+    if section_id.nil?
+      section_id = insert_section(section)
+    end
+    section.id = section_id
+
+    section.queries.each { |query| save_query(query) }
+  end
+
+  def save_query(query)
+    query_id = get_query_id(query)
+    if query_id.nil?
+      query_id = insert_query(query)
+    end
+    query.id = query_id
+
+    query.hrefs.each { |href| save_href(href) }
+  end
+
+  def save_href(href)
+    href_id = get_href_id(href)
+    if href_id.nil?
+      href_id = insert_href(href)
+    end
+    href.id = href_id
+  end
+
+  def get_section_id(section)
+    result = @db.execute "SELECT rowid FROM sections WHERE name='#{section.name}'"
+    if result.empty?
+      return nil
+    end
+    result[0][0]
+  end
+
+  def get_query_id(query)
+    result = @db.execute "SELECT rowid FROM queries WHERE value='#{query.value}' AND section_id=#{query.section.id}"
+    if result.empty?
+      return nil
+    end
+    result[0][0]
+  end
+
+  def get_href_id(href)
+    result = @db.execute "SELECT rowid FROM hrefs WHERE title='#{href.title}' AND query_id=#{href.query.id}"
+    if result.empty?
+      return nil
+    end
+    result[0][0]
+  end
+
+  def insert_section(section)
+    @db.execute "INSERT INTO sections(name, appendix) VALUES ('#{section.name}', '#{section.append}')"
+    get_last_rowid
+  end
+
+  def insert_query(query)
+    @db.execute "INSERT INTO queries(section_id, value) VALUES (#{query.section.id}, '#{query.value}')"
+    get_last_rowid
+  end
+
+  def insert_href(href)
+    @db.execute "INSERT INTO hrefs(query_id, title, url, size, size_raw) VALUES (#{href.query.id}, '#{href.title}', '#{href.url}', 0, '')"
+    get_last_rowid
+  end
+
+  def get_last_rowid
+    result = @db.execute "SELECT last_insert_rowid();"
+    result[0][0]
   end
 
   def consistent?
@@ -53,5 +108,27 @@ class SqlClient
 
     Util.log (if consistent then 'Consistent' else 'Inconsistent' end)
     consistent
+  end
+
+  def bootstrap
+    Util.log 'Bootstrapping database'
+
+    Util.log 'Dropping all tables'
+    drop_all_tables
+
+    Util.log 'Creating table: sections'
+    @db.execute('create table sections (name TEXT, appendix TEXT);')
+
+    Util.log 'Creating table: queries'
+    @db.execute('create table queries (section_id INT, value TEXT);')
+
+    Util.log 'Creating table: hrefs'
+    @db.execute('create table hrefs (query_id INTEGER, title TEXT, url TEXT, size INTEGER, size_raw TEXT);')
+
+    Util.log 'Bootstrapping competed'
+  end
+
+  def drop_all_tables
+    TABLE_NAMES.each { |table_name| @db.execute "drop table if exists #{table_name}" }
   end
 end
