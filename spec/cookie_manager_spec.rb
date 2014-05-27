@@ -10,8 +10,8 @@ describe CookieManager do
   end
 
   it "set cookies" do
-    server_response_mock = mock(Net::HTTPResponse)
-    server_response_mock.stub!(:get_fields).and_return(
+    server_response_mock = double(Net::HTTPResponse)
+    server_response_mock.stub(:get_fields).and_return(
         [
             'phpbb3_r3qux_u=1; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly',
             'phpbb3_r3qux_k=; expires=Tue, 11-Feb-2014 01:34:32 GMT; path=/; HttpOnly',
