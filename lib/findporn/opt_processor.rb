@@ -3,13 +3,14 @@ class OptProcessor
   DEFAULT_TO_LOGIN = false
   DEFAULT_VERBOSE = false
   DEFAULT_MAX_HREFS = 10
+  DEFAULT_ACTION = 'all'
 
   def initialize(args)
     @error = false
 
     @options = {}
     op = OptionParser.new do |opts|
-      opts.banner = "Usage: main.rb [options]"
+      opts.banner = "Usage: findporn [options]"
 
       opts.on("-v", "--verbose", "Run verbosely") do |v|
         @options[:verbose] = v
@@ -31,6 +32,9 @@ class OptProcessor
     rescue Exception
     end
 
+    if !ARGV.empty? then
+      @options[:action] = ARGV.pop
+    end
   end
 
   def error?
@@ -64,6 +68,15 @@ class OptProcessor
       @options[:max_hrefs]
     else
       DEFAULT_MAX_HREFS
+    end
+  end
+
+  # Action
+  def action
+    if @options.has_key? :action
+      @options[:action]
+    else
+      DEFAULT_ACTION
     end
   end
 end
