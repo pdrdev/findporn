@@ -53,7 +53,7 @@ class PornolabClient
       return find_hrefs(query)
     end
     doc = Nokogiri::HTML(response.body)
-    doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query).map{|s| Href.new(s)}
+    doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query).map{|s| Href.create s}
   end
 
   private

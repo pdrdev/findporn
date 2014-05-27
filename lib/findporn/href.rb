@@ -3,13 +3,19 @@
 class Href
   attr_reader :title
   attr_reader :url
-  attr_reader :id
 
-  def initialize(href_str)
-    @doc = href_str
-    @title = @doc.text
-    @url = @doc.get_attribute('href')
-    @id = @doc.get_attribute('href').gsub(/[^\d]+/, '').to_i
+  def self.create(href_str)
+    doc = href_str
+    title = doc.text
+    url = doc.get_attribute('href')
+
+    Href.new(title, url)
   end
 
+  private
+
+  def initialize(title, url)
+    @title = title
+    @url = url
+  end
 end
