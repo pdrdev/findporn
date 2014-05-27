@@ -27,12 +27,12 @@ class ResultRenderer
 
   def print_section(file, section)
     file.write "<h1>#{section.name}</h1>"
-    section.queries_to_hrefs.each do |query_to_hrefs|
-       print_hrefs_for_query file, query_to_hrefs[:query], query_to_hrefs[:hrefs]
+    section.queries.each do |query|
+       print_hrefs_for_query file, query.value, query.hrefs
     end
   end
 
-  def print_hrefs_for_query(file, query, hrefs)
+  def print_hrefs_for_query(file, query_value, hrefs)
     file.write "<h3>#{query}</h3>"
     hrefs.each do |href|
       file.write "<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>"

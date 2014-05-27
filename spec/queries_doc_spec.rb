@@ -36,8 +36,8 @@ describe QueriesDoc do
     sections[0].name.should == 'section1'
     sections[0].append.should == 'append1'
 
-    sections[0].queries[0].should == 'query1'
-    sections[0].queries[1].should == 'query2'
+    sections[0].queries[0].value.should == 'query1'
+    sections[0].queries[1].value.should == 'query2'
   end
 
   it "ignore empty lines and comments" do
@@ -55,7 +55,7 @@ describe QueriesDoc do
     sections[0].name.should == ''
     sections[0].append.should == ''
 
-    sections[0].queries[0].should == 'query1'
+    sections[0].queries[0].value.should == 'query1'
   end
 
   it "counts queries" do

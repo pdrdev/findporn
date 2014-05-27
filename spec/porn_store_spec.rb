@@ -16,13 +16,13 @@ describe PornStore do
     queries_doc = QueriesDoc.from_string input
 
     pornolab_client = double(PornolabClient)
-    pornolab_client.stub(:find_hrefs).and_return( Href.new('stub_title', 'stub_url'))
+    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url')])
 
     porn_store = PornStore.create(queries_doc, pornolab_client)
 
     porn_store.sections.length.should == queries_doc.sections.length
 
-    porn_store.sections[0].queries_to_hrefs[0][:hrefs].title.should == 'stub_title'
-    porn_store.sections[0].queries_to_hrefs[0][:hrefs].url.should == 'stub_url'
+    porn_store.sections[0].queries[0].hrefs[0].title.should == 'stub_title'
+    porn_store.sections[0].queries[0].hrefs[0].url.should == 'stub_url'
   end
 end

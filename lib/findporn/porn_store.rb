@@ -15,10 +15,10 @@ class PornStore
       Util.log('##################################', true)
       section.queries.each do |query|
         i += 1
-        Util.log("Processing query: #{query} (#{i}/#{total_queries})", true)
+        Util.log("Processing query: #{query.value} (#{i}/#{total_queries})", true)
 
         hrefs = pornolab_client.find_hrefs query
-        section.add_query_to_hrefs(query, hrefs)
+        query.hrefs = hrefs
       end
     end
 

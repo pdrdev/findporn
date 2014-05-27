@@ -27,7 +27,7 @@ class QueriesDoc
         section_name, section_append = get_name_and_append_from_section_string line
         current_section = Section.new section_name, section_append
       else
-        current_section.add_query line
+        current_section.add_query Query.new(line, current_section)
       end
     end
     @sections << current_section unless current_section.queries.length == 0 && current_section.name == ''
