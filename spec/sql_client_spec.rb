@@ -32,7 +32,7 @@ describe SqlClient do
   def get_porn_store_stub
     queries_doc = QueriesDoc.from_string TEST_DOC_SQL_CLIENT
     pornolab_client = double(PornolabClient)
-    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url')])
+    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil)])
     PornStore.create(queries_doc, pornolab_client)
   end
 end

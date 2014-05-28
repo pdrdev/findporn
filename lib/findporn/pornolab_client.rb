@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # Pornolab client
 # Takes care of all pornolab-specific stuff
 class PornolabClient
@@ -53,7 +55,16 @@ class PornolabClient
       return find_hrefs(query)
     end
     doc = Nokogiri::HTML(response.body)
-    doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query).map{|s| Href.create(s, query)}
+    titles = doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query)
+    sizes = doc.xpath("//a[@class='small tr-dl dl-stub']").take(max_hrefs_per_query)
+    uploads = doc.xpath("//td[@class='row4 small nowrap' and @title='Добавлен']").take(max_hrefs_per_query)
+
+    result = []
+    for i in 0...titles.length do
+      href = Href.create(titles[i], sizes[i], uploads[i], query)
+      result << href
+    end
+    result
   end
 
   private
