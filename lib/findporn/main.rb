@@ -46,8 +46,7 @@ class Main
     sql_client = SqlClient.create
     porn_store = PornStore.load sql_client
 
-    #get_hrefs_for_doc query_doc
-    #print_results query_doc
+    ResultRenderer.new.print_results porn_store
   end
 
   def sync
@@ -88,9 +87,5 @@ class Main
         section.add_query_to_hrefs(query, @pornolab_client.find_hrefs(query + " " + section.append, @opt_processor.max_hrefs))
       end
     end
-  end
-
-  def print_results(queries_doc)
-    ResultRenderer.new.print_results queries_doc
   end
 end

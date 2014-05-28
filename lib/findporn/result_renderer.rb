@@ -2,10 +2,12 @@ class ResultRenderer
   RESULT_FILE_NAME = 'result.html'
 
   # TODO use templates or something
-  def print_results(queries_doc)
+  def print_results(porn_store)
+    Util.log 'Rendering results'
+
     File.open(Util.root + RESULT_FILE_NAME, 'w') do |f|
       print_header f
-      queries_doc.sections.each do |section|
+      porn_store.sections.each do |section|
         print_section f, section
       end
       print_footer f
@@ -28,13 +30,13 @@ class ResultRenderer
   def print_section(file, section)
     file.write "<h1>#{section.name}</h1>"
     section.queries.each do |query|
-       print_hrefs_for_query file, query.value, query.hrefs
+       print_query file, query
     end
   end
 
-  def print_hrefs_for_query(file, query_value, hrefs)
-    file.write "<h3>#{query}</h3>"
-    hrefs.each do |href|
+  def print_query(file, query)
+    file.write "<h3>#{query.value}</h3>"
+    query.hrefs.each do |href|
       file.write "<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>"
     end
   end
