@@ -27,21 +27,6 @@ describe SqlClient do
     sql_client.save_porn_store get_porn_store_stub
   end
 
-  #noinspection RubyArgCount
-  it 'saves Section' do
-    database_stub = double(SQLite3::Database).stub(:execute).and_return('')
-    sql_client = SqlClient.new database_stub
-
-    section = Section.new('stub_section_name', 'stub_section_appendix')
-    section.add_query Query.new('stub_query_value', section)
-
-    sql_client.should_receive(:save_query) do |query|
-      query.value == 'stab_query_value'
-    end
-
-    sql_client.save_section section
-  end
-
   private
 
   def get_porn_store_stub
