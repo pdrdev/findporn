@@ -118,11 +118,12 @@ class SqlClient
   end
 
   def load_hrefs(query)
-    @db.execute("SELECT rowid, title, url, size, size_raw, upload_timestamp, upload_raw FROM hrefs where query_id=#{query.id}").map do |row|
+    res = @db.execute("SELECT rowid, title, url, size, size_raw, upload_timestamp, upload_raw FROM hrefs where query_id=#{query.id}").map do |row|
       href = Href.new(row[1], row[2], row[3], row[4], row[5], row[6], query)
       href.id = row[0]
       href
     end
+    res.sort{|x, y| y.upload_timestamp <=> x.upload_timestamp }
   end
 
   def consistent?
