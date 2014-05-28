@@ -58,7 +58,7 @@ class SqlClient
   end
 
   def get_query_id(query)
-    result = @db.execute "SELECT rowid FROM queries WHERE value='#{query.value}' AND section_id=#{query.section.id}"
+    result = @db.execute("SELECT rowid FROM queries WHERE value = ? AND section_id = ?", query.value, query.section.id)
     if result.empty?
       return nil
     end
@@ -74,12 +74,12 @@ class SqlClient
   end
 
   def insert_section(section)
-    @db.execute "INSERT INTO sections(name, appendix) VALUES ('#{section.name}', '#{section.append}')"
+    @db.execute("INSERT INTO sections(name, appendix) VALUES (?, ?)", section.name, section.append)
     get_last_rowid
   end
 
   def insert_query(query)
-    @db.execute "INSERT INTO queries(section_id, value) VALUES (#{query.section.id}, '#{query.value}')"
+    @db.execute("INSERT INTO queries(section_id, value) VALUES (?, ?)", query.section.id, query.value)
     get_last_rowid
   end
 
