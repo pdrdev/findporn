@@ -63,8 +63,8 @@ class Main
   end
 
   def do_all
-    render
     sync
+    render
   end
 
   def init_and_check_options
