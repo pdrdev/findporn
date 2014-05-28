@@ -66,7 +66,7 @@ class SqlClient
   end
 
   def get_href_id(href)
-    result = @db.execute "SELECT rowid FROM hrefs WHERE title='#{href.title}' AND query_id=#{href.query.id}"
+    result = @db.execute("SELECT rowid FROM hrefs WHERE title = ? AND query_id=  ? ", href.title, href.query.id)
     if result.empty?
       return nil
     end
@@ -85,8 +85,8 @@ class SqlClient
 
   def insert_href(href)
     q = "INSERT INTO hrefs(query_id, title, url, size, size_raw, upload_timestamp, upload_raw) VALUES (
-      #{href.query.id}, '#{href.title}', '#{href.url}', #{href.size.to_i}, '#{href.size_raw}', #{href.upload_timestamp.to_i}, '#{href.upload_raw}')"
-    @db.execute q
+      ?, ?, ?, ?, ?, ?, ?)"
+    @db.execute(q, href.query.id, href.title, href.url, href.size.to_i, href.size_raw, href.upload_timestamp.to_i, href.upload_raw)
     get_last_rowid
   end
 
