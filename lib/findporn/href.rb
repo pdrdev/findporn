@@ -1,5 +1,10 @@
+# encoding: utf-8
+
 # Parsing hyper references like
 # <a class="med tLink bold" href="./viewtopic.php?t=1234">Some title</a>
+
+require 'date'
+
 class Href
   attr_reader :title
   attr_reader :url
@@ -25,11 +30,28 @@ class Href
 
     time_str = href_upload_str.xpath("//p[contains(text(),':')]")[0].text
     date_str = href_upload_str.xpath("//p[contains(text(),'-')]")[0].text
+    upload_str = time_str + ' ' + date_str
 
-    Href.new(title, url, nil, size_raw, nil, time_str + ' ' + date_str, query)
+    parsed_date = self.to_date(time_str, date_str)
+
+    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, upload_str, query)
   end
 
   private
+
+  def self.to_date(time_str, date_str)
+    date_str = date_str.gsub('Янв', '01').gsub('Фев', '02').gsub('Мар', '03').gsub('Апр', '04').
+        gsub('Май', '05').gsub('Июн', '06').gsub('Июл', '07').gsub('Авг', '08').
+        gsub('Сен', '09').gsub('Окт', '10').gsub('Ноя', '11').gsub('Дек', '12')
+
+    day = date_str.split('-')[0].to_i
+    month = date_str.split('-')[1].to_i
+    year = ('20' + date_str.split('-')[2]).to_i
+
+    hour = time_str.split(':')[0].to_i
+    min = time_str.split(':')[1].to_i
+    DateTime.new(year, month, day, hour, min)
+  end
 
   def initialize(title, url, size, size_raw, upload_timestamp, upload_raw, query = nil)
     @title = title
