@@ -93,6 +93,36 @@ class SqlClient
     result[0][0]
   end
 
+  def load_porn_store
+    PornStore.new(load_sections)
+  end
+
+  def load_sections
+    @db.execute('SELECT rowid, name, appendix FROM sections').map do |row|
+      section = Section.new(row[1], row[2])
+      section.id = row[0]
+      section.queries = load_queries(section)
+      section
+    end
+  end
+
+  def load_queries(section)
+    @db.execute("SELECT rowid, value FROM queries where section_id=#{section.id}").map do |row|
+      query = Query.new(row[1], section)
+      query.id = row[0]
+      query.hrefs = load_hrefs(query)
+      query
+    end
+  end
+
+  def load_hrefs(query)
+    @db.execute("SELECT rowid, title, url FROM hrefs where query_id=#{query.id}").map do |row|
+      href = Href.new(row[1], row[2], query)
+      href.id = row[0]
+      href
+    end
+  end
+
   def consistent?
     Util.log 'Checking database consistency'
 

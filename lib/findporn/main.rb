@@ -43,8 +43,11 @@ class Main
 
   def render
     Util.log 'Executing action: render'
-    get_hrefs_for_doc query_doc
-    print_results query_doc
+    sql_client = SqlClient.create
+    porn_store = PornStore.load sql_client
+
+    #get_hrefs_for_doc query_doc
+    #print_results query_doc
   end
 
   def sync

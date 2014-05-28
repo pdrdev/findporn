@@ -25,12 +25,16 @@ class PornStore
     PornStore.new sections
   end
 
+  def self.load(db_client)
+    Util.log 'Loading PornStore'
+    db_client.load_porn_store
+  end
+
   def save(db_client)
     Util.log 'Saving PornStore'
     db_client.save_porn_store self
   end
 
-  private
   def initialize(sections)
     @sections = sections
   end
