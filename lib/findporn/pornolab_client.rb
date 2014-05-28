@@ -54,7 +54,10 @@ class PornolabClient
       login
       return find_hrefs(query)
     end
-    doc = Nokogiri::HTML(response.body)
+    body = response.body
+    body.force_encoding("windows-1251")
+    body = body.encode("UTF-8")
+    doc = Nokogiri::HTML(body)
     titles = doc.xpath("//a[@class='med tLink bold']").take(max_hrefs_per_query)
     sizes = doc.xpath("//a[@class='small tr-dl dl-stub']").take(max_hrefs_per_query)
     uploads = doc.xpath("//td[@class='row4 small nowrap' and @title='Добавлен']").take(max_hrefs_per_query)

@@ -1,3 +1,5 @@
+require 'date'
+
 class ResultRenderer
   RESULT_FILE_NAME = 'result.html'
 
@@ -37,7 +39,9 @@ class ResultRenderer
   def print_query(file, query)
     file.write "<h3>#{query.value}</h3>"
     query.hrefs.each do |href|
-      file.write "<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a><br>"
+      upload_date = DateTime.strptime(href.upload_timestamp.to_s, '%s')
+      formatted_date = upload_date.strftime('%m/%d/%Y')
+      file.write "<a href=http://pornolab.net/forum/#{href.url}>#{href.title}</a> Size: #{href.size_raw} Uploaded: #{formatted_date} <br>"
     end
   end
 end
