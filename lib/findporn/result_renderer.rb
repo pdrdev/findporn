@@ -18,12 +18,16 @@ class ResultRenderer
 
   private
   def print_header(file)
-    file.write '<?xml version="1.0" encoding="UTF-8"?>'
+    file.write '<!DOCTYPE html>'
     file.write '<html>'
     file.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="fp.js"></script></head>'
     file.write '<style type="text/css"> a:visited {color:gray;} body {background-color:white;} </style>'
     file.write '<body>'
     file.write "<input id='max_upload_days' size='10' /><button onclick='filterByUploadDate()'>Filter</button> "
+    file.write "<br>"
+    file.write "<input id='filter_empty_queries' type='checkbox' onclick='filterEmptyQueries()'/> Filter empty queries"
+    file.write "<br>"
+    file.write "<input id='filter_empty_sections' type='checkbox' onclick='filterEmptySections()'/> Filter empty sections"
   end
 
   def print_footer(file)
@@ -31,13 +35,16 @@ class ResultRenderer
   end
 
   def print_section(file, section)
+    file.write "<div class='section'>"
     file.write "<h1>#{section.name}</h1>"
     section.queries.each do |query|
        print_query file, query
     end
+    file.write "</div>"
   end
 
   def print_query(file, query)
+    file.write "<div class='query'>"
     file.write "<h3>#{query.value}</h3>"
     query.hrefs.each do |href|
       upload_date = DateTime.strptime(href.upload_timestamp.to_s, '%s')
@@ -46,5 +53,6 @@ class ResultRenderer
       file.write "<a href='http://pornolab.net/forum/#{href.url}'>#{href.title}</a> Size: #{href.size_raw} Uploaded: #{formatted_date}"
       file.write '</div>'
     end
+    file.write "</div>"
   end
 end
