@@ -17,7 +17,7 @@ class PornStore
         i += 1
         Util.log("Processing query: #{query.value} (#{i}/#{total_queries})", true)
 
-        hrefs = pornolab_client.find_hrefs query + ' ' + section.append
+        hrefs = pornolab_client.find_hrefs query
         query.hrefs = hrefs
       end
     end

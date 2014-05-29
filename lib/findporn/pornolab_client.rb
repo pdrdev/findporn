@@ -39,7 +39,7 @@ class PornolabClient
     while true do
       attempts += 1
       begin
-        response = http.post(@search_path, "max=1&to=1&nm=#{query.value}", {'Cookie' => @cookie_manager.get_cookies})
+        response = http.post(@search_path, "max=1&to=1&nm=#{query.value + ' ' + query.section.append}", {'Cookie' => @cookie_manager.get_cookies})
         break
       rescue Exception => e
         if attempts <= MAX_HTTP_ATTEMPTS then

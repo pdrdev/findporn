@@ -42,6 +42,7 @@ def include_config_files(p)
   config_files.each do |f|
     p.package_files.include f
   end
+  p.package_files.include 'fp.js'
 end
 
 def copy_config_files_to_root(dir)
