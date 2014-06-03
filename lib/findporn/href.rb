@@ -14,7 +14,7 @@ class Href
   attr_reader :size_raw
 
   attr_reader :upload_timestamp
-  attr_reader :creation_timestamp
+  attr_reader :added_timestamp
 
   attr_accessor :id
   attr_accessor :active
@@ -53,14 +53,14 @@ class Href
     DateTime.new(year, month, day, hour, min)
   end
 
-  def initialize(title, url, size, size_raw, upload_timestamp, creation_timestamp, active, query = nil)
+  def initialize(title, url, size, size_raw, upload_timestamp, added_timestamp, active, query = nil)
     @title = title
     @url = url
     @query = query
     @size = size
     @size_raw = size_raw
     @upload_timestamp = upload_timestamp
-    @creation_timestamp = creation_timestamp
+    @added_timestamp = added_timestamp
     @active = active
   end
 end
