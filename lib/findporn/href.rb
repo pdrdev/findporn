@@ -14,7 +14,7 @@ class Href
   attr_reader :size_raw
 
   attr_reader :upload_timestamp
-  attr_reader :upload_raw
+  attr_reader :creation_timestamp
 
   attr_accessor :id
 
@@ -30,11 +30,10 @@ class Href
 
     time_str = href_upload_str.xpath("//p[contains(text(),':')]")[0].text
     date_str = href_upload_str.xpath("//p[contains(text(),'-')]")[0].text
-    upload_str = time_str + ' ' + date_str
 
     parsed_date = self.to_date(time_str, date_str)
 
-    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, query)
+    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, DateTime.now.to_time.to_i, query)
   end
 
   private
@@ -53,12 +52,13 @@ class Href
     DateTime.new(year, month, day, hour, min)
   end
 
-  def initialize(title, url, size, size_raw, upload_timestamp, query = nil)
+  def initialize(title, url, size, size_raw, upload_timestamp, creation_timestamp, query = nil)
     @title = title
     @url = url
     @query = query
     @size = size
     @size_raw = size_raw
     @upload_timestamp = upload_timestamp
+    @creation_timestamp = creation_timestamp
   end
 end
