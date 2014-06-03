@@ -34,7 +34,7 @@ class Href
 
     parsed_date = self.to_date(time_str, date_str)
 
-    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, upload_str, query)
+    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, query)
   end
 
   private
@@ -53,13 +53,12 @@ class Href
     DateTime.new(year, month, day, hour, min)
   end
 
-  def initialize(title, url, size, size_raw, upload_timestamp, upload_raw, query = nil)
+  def initialize(title, url, size, size_raw, upload_timestamp, query = nil)
     @title = title
     @url = url
     @query = query
     @size = size
     @size_raw = size_raw
     @upload_timestamp = upload_timestamp
-    @upload_raw = upload_raw
   end
 end

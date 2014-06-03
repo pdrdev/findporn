@@ -84,9 +84,9 @@ class SqlClient
   end
 
   def insert_href(href)
-    q = "INSERT INTO hrefs(query_id, title, url, size, size_raw, upload_timestamp, upload_raw) VALUES (
+    q = "INSERT INTO hrefs(query_id, title, url, size, size_raw, upload_timestamp) VALUES (
       ?, ?, ?, ?, ?, ?, ?)"
-    @db.execute(q, href.query.id, href.title, href.url, href.size.to_i, href.size_raw, href.upload_timestamp.to_i, href.upload_raw)
+    @db.execute(q, href.query.id, href.title, href.url, href.size.to_i, href.size_raw, href.upload_timestamp.to_i)
     get_last_rowid
   end
 
@@ -118,8 +118,8 @@ class SqlClient
   end
 
   def load_hrefs(query)
-    res = @db.execute("SELECT rowid, title, url, size, size_raw, upload_timestamp, upload_raw FROM hrefs where query_id=#{query.id}").map do |row|
-      href = Href.new(row[1], row[2], row[3], row[4], row[5], row[6], query)
+    res = @db.execute("SELECT rowid, title, url, size, size_raw, upload_timestamp FROM hrefs where query_id=#{query.id}").map do |row|
+      href = Href.new(row[1], row[2], row[3], row[4], row[5], query)
       href.id = row[0]
       href
     end
@@ -156,7 +156,7 @@ class SqlClient
     @db.execute('create table queries (section_id INT, value TEXT);')
 
     Util.log 'Creating table: hrefs'
-    @db.execute('create table hrefs (query_id INTEGER, title TEXT, url TEXT, size INTEGER, size_raw TEXT, upload_timestamp INTEGER, upload_raw TEXT);')
+    @db.execute('create table hrefs (query_id INTEGER, title TEXT, url TEXT, size INTEGER, size_raw TEXT, upload_timestamp INTEGER);')
 
     Util.log 'Bootstrapping competed'
   end
