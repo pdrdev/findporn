@@ -19,6 +19,6 @@ describe Href do
 
     href.size_raw.should == '356MB'
 
-    href.upload_timestamp.should == 1380701400
+    href.uploaded_timestamp.should == 1380701400
   end
 end

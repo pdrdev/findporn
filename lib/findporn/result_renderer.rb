@@ -49,9 +49,9 @@ class ResultRenderer
     file.write "<div class='query' active='#{query.active.to_s}'>"
     file.write "<h3>#{query.value}</h3>"
     query.hrefs.each do |href|
-      upload_date = DateTime.strptime(href.upload_timestamp.to_s, '%s')
+      upload_date = DateTime.strptime(href.uploaded_timestamp.to_s, '%s')
       formatted_date = upload_date.strftime('%m/%d/%Y')
-      file.write "<div class='href' uploaded_timestamp='#{href.upload_timestamp.to_s}' added_timestamp='#{href.added_timestamp.to_s}' active='#{href.active.to_s}'>"
+      file.write "<div class='href' uploaded_timestamp='#{href.uploaded_timestamp.to_s}' added_timestamp='#{href.added_timestamp.to_s}' active='#{href.active.to_s}'>"
       file.write "<a href='http://pornolab.net/forum/#{href.url}'>#{href.title}</a> Size: #{href.size_raw} Uploaded: #{formatted_date}"
       file.write '</div>'
     end

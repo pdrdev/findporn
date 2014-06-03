@@ -91,9 +91,9 @@ class SqlClient
   end
 
   def insert_href(href)
-    q = "INSERT INTO hrefs(query_id, title, url, size, size_raw, active, upload_timestamp, added_timestamp) VALUES (
+    q = "INSERT INTO hrefs(query_id, title, url, size, size_raw, active, uploaded_timestamp, added_timestamp) VALUES (
       ?, ?, ?, ?, ?, ?, ?, ?)"
-    @db.execute(q, href.query.id, href.title, href.url, href.size.to_i, href.size_raw, if href.active then 1 else 0 end, href.upload_timestamp.to_i, href.added_timestamp.to_i)
+    @db.execute(q, href.query.id, href.title, href.url, href.size.to_i, href.size_raw, if href.active then 1 else 0 end, href.uploaded_timestamp.to_i, href.added_timestamp.to_i)
     get_last_rowid
   end
 
@@ -143,12 +143,12 @@ class SqlClient
   end
 
   def load_hrefs(query)
-    res = @db.execute("SELECT rowid, title, url, size, size_raw, active, upload_timestamp, added_timestamp FROM hrefs where query_id=#{query.id}").map do |row|
+    res = @db.execute("SELECT rowid, title, url, size, size_raw, active, uploaded_timestamp, added_timestamp FROM hrefs where query_id=#{query.id}").map do |row|
       href = Href.new(row[1], row[2], row[3], row[4], row[6], row[7], row[5] == 1, query)
       href.id = row[0]
       href
     end
-    res.sort{|x, y| y.upload_timestamp <=> x.upload_timestamp }
+    res.sort{|x, y| y.uploaded_timestamp <=> x.uploaded_timestamp }
   end
 
   def consistent?
@@ -181,7 +181,7 @@ class SqlClient
     @db.execute('create table queries (section_id INT, value TEXT, active INTEGER);')
 
     Util.log 'Creating table: hrefs'
-    @db.execute('create table hrefs (query_id INTEGER, title TEXT, url TEXT, size INTEGER, size_raw TEXT, active INTEGER, upload_timestamp INTEGER, added_timestamp INTEGER);')
+    @db.execute('create table hrefs (query_id INTEGER, title TEXT, url TEXT, size INTEGER, size_raw TEXT, active INTEGER, uploaded_timestamp INTEGER, added_timestamp INTEGER);')
 
     Util.log 'Bootstrapping competed'
   end
