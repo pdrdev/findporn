@@ -17,8 +17,9 @@ class Href
   attr_reader :creation_timestamp
 
   attr_accessor :id
+  attr_accessor :active
 
-  def self.create(href_title_str, href_size_str, href_upload_str, query = nil)
+  def self.create(href_title_str, href_size_str, href_upload_str, active, query)
     doc = href_title_str
     title = doc.text
     url = doc.get_attribute('href')
@@ -33,7 +34,7 @@ class Href
 
     parsed_date = self.to_date(time_str, date_str)
 
-    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, DateTime.now.to_time.to_i, query)
+    Href.new(title, url, nil, size_raw, parsed_date.to_time.to_i, DateTime.now.to_time.to_i, active, query)
   end
 
   private
@@ -52,7 +53,7 @@ class Href
     DateTime.new(year, month, day, hour, min)
   end
 
-  def initialize(title, url, size, size_raw, upload_timestamp, creation_timestamp, query = nil)
+  def initialize(title, url, size, size_raw, upload_timestamp, creation_timestamp, active, query = nil)
     @title = title
     @url = url
     @query = query
@@ -60,5 +61,6 @@ class Href
     @size_raw = size_raw
     @upload_timestamp = upload_timestamp
     @creation_timestamp = creation_timestamp
+    @active = active
   end
 end

@@ -16,7 +16,7 @@ describe PornStore do
     queries_doc = QueriesDoc.from_string TEST_DOC_PORN_STORE
 
     pornolab_client = double(PornolabClient)
-    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil)])
+    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil, true)])
 
     porn_store = PornStore.create(queries_doc, pornolab_client)
 
@@ -29,7 +29,7 @@ describe PornStore do
   it 'saves PornStore' do
     queries_doc = QueriesDoc.from_string TEST_DOC_PORN_STORE
     pornolab_client = double(PornolabClient)
-    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil)])
+    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil, true)])
     porn_store = PornStore.create(queries_doc, pornolab_client)
 
     sql_client = double(SqlClient)

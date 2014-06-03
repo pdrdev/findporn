@@ -64,7 +64,7 @@ class PornolabClient
 
     result = []
     for i in 0...titles.length do
-      href = Href.create(titles[i], sizes[i], uploads[i], query)
+      href = Href.create(titles[i], sizes[i], uploads[i], true, query)
       result << href
     end
     result

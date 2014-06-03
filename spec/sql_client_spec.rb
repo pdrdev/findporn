@@ -15,6 +15,8 @@ describe SqlClient do
 
   it 'saves PornStore' do
     database_stub = double(SQLite3::Database)
+    database_stub.stub(:execute)
+
     sql_client = SqlClient.new database_stub
 
     sql_client.should_receive(:save_section) do |session|
@@ -32,7 +34,7 @@ describe SqlClient do
   def get_porn_store_stub
     queries_doc = QueriesDoc.from_string TEST_DOC_SQL_CLIENT
     pornolab_client = double(PornolabClient)
-    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil)])
+    pornolab_client.stub(:find_hrefs).and_return( [Href.new('stub_title', 'stub_url', nil, nil, nil, nil, true)])
     PornStore.create(queries_doc, pornolab_client)
   end
 end

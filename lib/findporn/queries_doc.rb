@@ -20,14 +20,14 @@ class QueriesDoc
     lines = remove_comments_and_trim lines
     lines = remove_empty_lines lines
 
-    current_section = Section.new("", "")
+    current_section = Section.new("", "", true)
     lines.each do |line|
       if section_definition? line
         @sections << current_section unless current_section.queries.length == 0 && current_section.name == ''
         section_name, section_append = get_name_and_append_from_section_string line
-        current_section = Section.new section_name, section_append
+        current_section = Section.new section_name, section_append, true
       else
-        current_section.add_query Query.new(line, current_section)
+        current_section.add_query Query.new(line, current_section, true)
       end
     end
     @sections << current_section unless current_section.queries.length == 0 && current_section.name == ''

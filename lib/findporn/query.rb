@@ -4,10 +4,12 @@ class Query
   attr_reader :section
   attr_accessor :hrefs
   attr_accessor :id
+  attr_accessor :active
 
-  def initialize(value, section)
+  def initialize(value, section, active)
     @value = value
     @section = section
+    @active = active
     @hrefs = []
   end
 end
