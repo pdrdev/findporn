@@ -35,7 +35,7 @@ class ResultRenderer
   end
 
   def print_section(file, section)
-    file.write "<div class='section'>"
+    file.write "<div class='section' active='#{section.active.to_s}'>"
     file.write "<h1>#{section.name}</h1>"
     section.queries.each do |query|
        print_query file, query
@@ -44,12 +44,12 @@ class ResultRenderer
   end
 
   def print_query(file, query)
-    file.write "<div class='query'>"
+    file.write "<div class='query' active='#{query.active.to_s}'>"
     file.write "<h3>#{query.value}</h3>"
     query.hrefs.each do |href|
       upload_date = DateTime.strptime(href.upload_timestamp.to_s, '%s')
       formatted_date = upload_date.strftime('%m/%d/%Y')
-      file.write "<div class='href' upload_timestamp='#{href.upload_timestamp.to_s}'>"
+      file.write "<div class='href' upload_timestamp='#{href.upload_timestamp.to_s}' creations_timestamp='#{href.creation_timestamp.to_s}' active='#{href.active.to_s}'>"
       file.write "<a href='http://pornolab.net/forum/#{href.url}'>#{href.title}</a> Size: #{href.size_raw} Uploaded: #{formatted_date}"
       file.write '</div>'
     end

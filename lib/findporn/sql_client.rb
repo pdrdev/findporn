@@ -135,7 +135,7 @@ class SqlClient
 
   def load_queries(section)
     @db.execute("SELECT rowid, value, active FROM queries where section_id=#{section.id}").map do |row|
-      query = Query.new(row[1], row[2] == 1, section)
+      query = Query.new(row[1], section, row[2] == 1)
       query.id = row[0]
       query.hrefs = load_hrefs(query)
       query
