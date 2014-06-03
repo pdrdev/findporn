@@ -1,18 +1,23 @@
-function filterByUploadDate()
+function filterByDates()
 {
-    var maxDays =  document.getElementById('max_upload_days').value
+    var maxDaysSinceUploaded =  document.getElementById('max_uploaded_days').value
+    var maxDaysSinceAdded =  document.getElementById('max_added_days').value
 
     var now = new Date().getTime() / 1000
     var allElements = document.getElementsByTagName('div')
     for (var i = 0, n = allElements.length; i < n; i++)
     {
-        if (allElements[i].getAttribute('upload_timestamp'))
+        if (allElements[i].getAttribute('uploaded_timestamp') && allElements[i].getAttribute('added_timestamp'))
         {
-            var uploadTimeStamp = allElements[i].getAttribute('upload_timestamp')
-            var diffTime = now - uploadTimeStamp
-            var days = diffTime / 24 / 60 / 60
+            var uploadedTimeStamp = allElements[i].getAttribute('uploaded_timestamp')
+            var addedTimeStamp = allElements[i].getAttribute('added_timestamp')
+            var diffTimeUploaded = now - uploadedTimeStamp
+            var diffTimeAdded = now - addedTimeStamp
+            var daysUploaded = diffTimeUploaded / 24 / 60 / 60
+            var daysAdded = diffTimeAdded / 24 / 60 / 60
 
-            if (!maxDays || days <= maxDays)
+            var hide = (maxDaysSinceUploaded && (daysUploaded > maxDaysSinceUploaded)) || (maxDaysSinceAdded && (daysAdded > maxDaysSinceAdded));
+            if (!hide)
             {
                 allElements[i].style.display = 'block'
             } else

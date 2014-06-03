@@ -23,7 +23,9 @@ class ResultRenderer
     file.write '<head><meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="fp.js"></script></head>'
     file.write '<style type="text/css"> a:visited {color:gray;} body {background-color:white;} </style>'
     file.write '<body>'
-    file.write "<input id='max_upload_days' size='10' /><button onclick='filterByUploadDate()'>Filter</button> "
+    file.write "<input id='max_uploaded_days' size='10' /><button onclick='filterByDates()'>Filter</button> by max days since uploading"
+    file.write "<br>"
+    file.write "<input id='max_added_days' size='10' /><button onclick='filterByDates()'>Filter</button> by max days since adding"
     file.write "<br>"
     file.write "<input id='filter_empty_queries' type='checkbox' onclick='filterEmptyQueries()'/> Filter empty queries"
     file.write "<br>"
@@ -49,7 +51,7 @@ class ResultRenderer
     query.hrefs.each do |href|
       upload_date = DateTime.strptime(href.upload_timestamp.to_s, '%s')
       formatted_date = upload_date.strftime('%m/%d/%Y')
-      file.write "<div class='href' upload_timestamp='#{href.upload_timestamp.to_s}' added_timestamp='#{href.added_timestamp.to_s}' active='#{href.active.to_s}'>"
+      file.write "<div class='href' uploaded_timestamp='#{href.upload_timestamp.to_s}' added_timestamp='#{href.added_timestamp.to_s}' active='#{href.active.to_s}'>"
       file.write "<a href='http://pornolab.net/forum/#{href.url}'>#{href.title}</a> Size: #{href.size_raw} Uploaded: #{formatted_date}"
       file.write '</div>'
     end
