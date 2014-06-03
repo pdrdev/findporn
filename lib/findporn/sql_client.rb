@@ -1,7 +1,7 @@
 require_relative 'util.rb'
 
 class SqlClient
-  DB_FILE_NAME = Util.root + 'test.db'
+  DB_FILE_NAME = Util.root + 'fp.db'
   TABLE_NAMES = ['sections', 'hrefs', 'queries']
 
   def self.create
